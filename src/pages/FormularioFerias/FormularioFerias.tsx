@@ -4,7 +4,6 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import FeriasPdfDocument from "../../pdf/FeriasPdfDocument";
 import "./FormularioFerias.css";
 
-// Atualizamos a interface para incluir o novo campo
 interface FormData {
   nome: string;
   matricula: string;
@@ -13,20 +12,20 @@ interface FormData {
   periodoGozo: "30" | "outro";
   dataInicio: string;
   observacoes: string;
-  outrosDias: string; // Novo campo para a quantidade de dias
+  outrosDias: string;
   dataRequerimento: Date;
 }
 
 const FormularioFerias = () => {
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState({
     nome: "",
     matricula: "",
     cpf: "",
     lotacao: "",
-    periodoGozo: "30",
+    periodoGozo: "30" as "30" | "outro",
     dataInicio: "",
     observacoes: "",
-    outrosDias: "", // Valor inicial vazio
+    outrosDias: "",
     dataRequerimento: new Date(),
   });
 
@@ -45,7 +44,6 @@ const FormularioFerias = () => {
   return (
     <div className="form-container">
       <h2>Requerimento de Férias Regulamentares</h2>
-
       <div className="form-section">
         <h3>1. Dados do requisitante</h3>
         <div className="form-grid">
@@ -79,7 +77,6 @@ const FormularioFerias = () => {
           />
         </div>
       </div>
-
       <div className="form-section">
         <h3>2. Período de gozo</h3>
         <div className="radio-group">
@@ -104,8 +101,6 @@ const FormularioFerias = () => {
             Outro(s) período(s)
           </label>
         </div>
-
-        {/* Este bloco só aparece se "outro" estiver selecionado */}
         {formData.periodoGozo === "outro" && (
           <div className="conditional-input">
             <label htmlFor="outrosDias">Quantos dias?</label>
@@ -119,7 +114,6 @@ const FormularioFerias = () => {
             />
           </div>
         )}
-
         <label style={{ marginTop: "1rem", display: "block" }}>
           A partir de:
         </label>
@@ -130,7 +124,6 @@ const FormularioFerias = () => {
           onChange={handleInputChange}
         />
       </div>
-
       <div className="form-section">
         <label>Observações:</label>
         <textarea
@@ -142,7 +135,7 @@ const FormularioFerias = () => {
       </div>
 
       <PDFDownloadLink
-        document={<FeriasPdfDocument data={formData} />}
+        document={<FeriasPdfDocument data={formData as any} />}
         fileName="requerimento_ferias.pdf"
         className="generate-pdf-button"
       >

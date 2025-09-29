@@ -295,7 +295,7 @@ const RelatorioViagem = () => {
       {documentoPronto && (
         <div style={{ textAlign: "center", marginTop: "1rem" }}>
           <PDFDownloadLink
-            document={documentoPronto}
+            document={documentoPronto as any}
             fileName="relatorio_viagem.pdf"
             className="download-link"
           >

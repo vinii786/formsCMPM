@@ -147,14 +147,13 @@ const SolicitacaoDocumentos = () => {
       </button>
 
       {documentoPronto && (
-        <div
-          className="download-link-container"
-          style={{ textAlign: "center", marginTop: "1rem" }}
-        >
+        <div style={{ textAlign: "center", marginTop: "1rem" }}>
           <PDFDownloadLink
-            document={documentoPronto}
+            document={documentoPronto as any}
             fileName="solicitacao_documentos.pdf"
+            className="download-link"
           >
+            {/* Também corrigi o erro de 'Loading' para 'loading' */}
             {({ loading }) =>
               loading
                 ? "A carregar documento..."

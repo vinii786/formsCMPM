@@ -1,5 +1,3 @@
-// src/pdf/SolicitacaoEstagiarioPdf.tsx
-import React from "react";
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 
 interface OpcaoCurso {
@@ -133,8 +131,6 @@ const styles = StyleSheet.create({
 });
 
 const SolicitacaoEstagiarioPdf = ({ formData }: { formData: FormData }) => {
-  const currentDate = new Date();
-
   return (
     <Document>
       <Page size="A4" style={styles.page}>

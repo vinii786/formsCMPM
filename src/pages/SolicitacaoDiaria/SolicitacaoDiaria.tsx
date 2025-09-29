@@ -312,7 +312,7 @@ const SolicitacaoDiaria = () => {
       {documentoPronto && (
         <div style={{ textAlign: "center", marginTop: "1rem" }}>
           <PDFDownloadLink
-            document={documentoPronto}
+            document={documentoPronto as any}
             fileName="solicitacao_diaria.pdf"
             className="download-link"
           >
