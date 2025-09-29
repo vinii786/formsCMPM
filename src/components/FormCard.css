@@ -1,0 +1,45 @@
+/* src/components/FormCard.css */
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 24px;
+  width: 280px;
+  height: 220px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border-top: 4px solid #0056b3; /* Cor primária (azul) */
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-icon {
+  font-size: 48px; /* Tamanho do ícone */
+  color: #0056b3; /* Cor primária (azul) */
+  margin-bottom: 16px;
+}
+
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.card p {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.card-link {
+  text-decoration: none;
+  color: inherit;
+}
