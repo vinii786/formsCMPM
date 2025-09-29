@@ -103,7 +103,7 @@ const Adiantamento13 = () => {
       {documentoPronto && (
         <div style={{ textAlign: "center", marginTop: "1rem" }}>
           <PDFDownloadLink
-            document={documentoPronto}
+            document={documentoPronto as any}
             fileName="adiantamento_13.pdf"
             className="download-link"
           >

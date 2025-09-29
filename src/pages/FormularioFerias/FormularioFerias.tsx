@@ -17,12 +17,13 @@ interface FormData {
 }
 
 const FormularioFerias = () => {
-  const [formData, setFormData] = useState({
+  // A correção foi aplicada aqui, adicionando <FormData>
+  const [formData, setFormData] = useState<FormData>({
     nome: "",
     matricula: "",
     cpf: "",
     lotacao: "",
-    periodoGozo: "30" as "30" | "outro",
+    periodoGozo: "30",
     dataInicio: "",
     observacoes: "",
     outrosDias: "",
