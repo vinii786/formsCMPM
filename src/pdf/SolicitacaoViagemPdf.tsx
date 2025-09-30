@@ -19,10 +19,12 @@ interface FormData {
 }
 
 const styles = StyleSheet.create({
-  page: { fontFamily: "Helvetica", fontSize: 10, padding: 40 },
-  headerText: { fontSize: 9, textAlign: "center" },
+  page: { fontFamily: "Helvetica", fontSize: 10, padding: 40, color: "#333" },
+  header: { textAlign: "center", marginBottom: 15 },
+  bold: { fontFamily: "Helvetica-Bold" },
+  headerText: { fontSize: 9, color: "grey", lineHeight: 1.3 },
   title: {
-    fontSize: 10,
+    fontSize: 12,
     fontFamily: "Helvetica-Bold",
     textAlign: "center",
     margin: "15px 0",
@@ -33,41 +35,94 @@ const styles = StyleSheet.create({
     lineHeight: 1.5,
     marginBottom: 10,
   },
-  section: { marginBottom: 8 },
-  sectionTitle: { fontFamily: "Helvetica-Bold", marginBottom: 4 },
+  section: {
+    borderWidth: 1,
+    borderColor: "#000",
+    marginBottom: 10,
+  },
+  sectionTitle: {
+    padding: 4,
+    backgroundColor: "#E0E0E0",
+    fontFamily: "Helvetica-Bold",
+    fontSize: 11,
+    borderBottomWidth: 1,
+    borderBottomColor: "#000",
+  },
+  content: {
+    padding: 8,
+  },
+  contentFinalidade: {
+    padding: 8,
+    display: "flex",
+    flexDirection: "row",
+    gap: 10,
+  },
+  row: {
+    flexDirection: "row",
+    marginBottom: 8,
+  },
+  col: {
+    flex: 1,
+    paddingRight: 10,
+  },
+  fieldLabel: {
+    fontSize: 8,
+    fontFamily: "Helvetica-Bold",
+    marginBottom: 2,
+  },
   fieldValue: {
-    borderBottom: "1px dotted #000",
+    fontSize: 9,
+    borderBottomWidth: 1,
+    borderBottomStyle: "dotted",
+    borderBottomColor: "#000",
+    paddingBottom: 2,
     minHeight: 12,
-    paddingLeft: 4,
   },
   table: {
     display: "flex",
     flexDirection: "column",
     width: "100%",
-    border: "1px solid #000",
+    borderWidth: 1,
+    borderColor: "#000",
     marginTop: 10,
   },
   tableHeader: {
     flexDirection: "row",
     backgroundColor: "#E0E0E0",
-    borderBottom: "1px solid #000",
+    borderBottomWidth: 1,
+    borderBottomColor: "#000",
   },
-  tableRow: { flexDirection: "row", borderBottom: "1px solid #000" },
+  tableRow: { flexDirection: "row" },
   tableColHeader: {
     flex: 1,
-    borderRight: "1px solid #000",
+    borderRightWidth: 1,
+    borderRightColor: "#000",
     padding: 4,
     fontFamily: "Helvetica-Bold",
+    textAlign: "center",
+    fontSize: 9,
   },
   tableCol: {
     flex: 1,
-    borderRight: "1px solid #000",
+    borderRightWidth: 1,
+    borderRightColor: "#000",
     padding: 4,
     minHeight: 20,
   },
-  footerText: { fontSize: 8, marginTop: 10 },
-  signatureBlock: { marginTop: 30, alignItems: "center" },
-  signatureLine: { borderBottom: "1px solid #000", width: "60%", marginTop: 2 },
+  footerText: { fontSize: 8, marginTop: 5, fontStyle: "italic" },
+  signatureSection: {
+    marginTop: 25,
+    alignItems: "center",
+  },
+  signatureLine: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#000",
+    width: "60%",
+  },
+  signatureText: {
+    fontSize: 9,
+    marginTop: 3,
+  },
 });
 
 const SolicitacaoViagemPdf = ({
@@ -82,21 +137,23 @@ const SolicitacaoViagemPdf = ({
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        <Text style={{ fontFamily: "Helvetica-Bold", textAlign: "center" }}>
-          CÂMARA MUNICIPAL DE PATOS DE MINAS
-        </Text>
-        <Text style={styles.headerText}>
-          Rua José de Santana, 470, Centro CEP: 38700-052-Patos de Minas - MG
-        </Text>
-        <Text style={styles.headerText}>
-          Tel: (34) 3821-8455-camarapatos@camarapatos.mg.gov.br -
-          www.camarapatos.mg.gov.br
-        </Text>
-        <Text style={{ marginTop: 20, textAlign: "center", fontSize: 17 }}>
-          Solicitação de Viagem
-        </Text>
+        <View style={styles.header}>
+          <Text style={styles.bold}>CÂMARA MUNICIPAL DE PATOS DE MINAS</Text>
+          <Text style={styles.headerText}>
+            Rua José de Santana, 470, Centro CEP: 38700-052-Patos de Minas - MG
+          </Text>
+          <Text style={styles.headerText}>
+            Tel: (34) 3821-8455-camarapatos@camarapatos.mg.gov.br -
+            www.camarapatos.mg.gov.br
+          </Text>
+        </View>
+
         <Text
-          style={{ ...styles.introText, marginTop: 20, textAlign: "center" }}
+          style={{
+            ...styles.introText,
+            textAlign: "center",
+            fontFamily: "Helvetica-Bold",
+          }}
         >
           EXCELENTÍSSIMO SENHOR PRESIDENTE DA CÂMARA MUNICIPAL DE PATOS DE MINAS
         </Text>
@@ -109,60 +166,57 @@ const SolicitacaoViagemPdf = ({
         <Text style={styles.introText}>Para tanto, especifico o seguinte:</Text>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>
-            1. Quem participará da viagem:
-          </Text>
-          <Text style={{ marginLeft: 10 }}>
-            {" "}
-            Vereador Nº de participantes: {formData.numVereadores}
-          </Text>
-          <Text style={{ marginLeft: 10 }}>
-            {" "}
-            Servidor Nº de participantes: {formData.numServidores}
-          </Text>
+          <Text style={styles.sectionTitle}>1. Finalidade:</Text>
+          <View style={styles.contentFinalidade}>
+            <Text style={{ marginBottom: 5 }}>
+              [{formData.finalidade === "encontro" ? "X" : " "}]
+              Encontro/Seminário/Congresso
+            </Text>
+            <Text style={{ marginBottom: 5 }}>
+              [{formData.finalidade === "curso" ? "X" : " "}] Curso de
+              aperfeiçoamento
+            </Text>
+            <Text>
+              [{formData.finalidade === "outros" ? "X" : " "}] Outros:{" "}
+              <Text style={{ ...styles.fieldValue, flex: 1 }}>
+                {formData.finalidadeOutros}
+              </Text>
+            </Text>
+          </View>
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>2. Finalidade:</Text>
-          <Text style={{ marginLeft: 10 }}>
-            [{formData.finalidade === "encontro" ? "X" : " "}]
-            Encontro/Seminário/Congresso
-          </Text>
-          <Text style={{ marginLeft: 10 }}>
-            [{formData.finalidade === "curso" ? "X" : " "}] Curso de
-            aperfeiçoamento
-          </Text>
-          <Text style={{ marginLeft: 10 }}>
-            [{formData.finalidade === "outros" ? "X" : " "}] Outros:{" "}
-            <Text style={styles.fieldValue}>{formData.finalidadeOutros}</Text>
-          </Text>
+          <Text style={styles.sectionTitle}>2. Período</Text>
+          <View style={styles.content}>
+            <Text style={styles.fieldValue}>{formData.periodo || " "}</Text>
+          </View>
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>
-            3. Período:{" "}
-            <Text style={styles.fieldValue}>{formData.periodo}</Text>
-          </Text>
+          <Text style={styles.sectionTitle}>3. Destino</Text>
+          <View style={styles.content}>
+            <View style={styles.row}>
+              <View style={styles.col}>
+                <Text style={styles.fieldLabel}>a) Cidade e Estado:</Text>
+                <Text style={styles.fieldValue}>{formData.cidadeEstado}</Text>
+              </View>
+              <View style={styles.col}>
+                <Text style={styles.fieldLabel}>b) Local:</Text>
+                <Text style={styles.fieldValue}>{formData.local}</Text>
+              </View>
+              <View style={styles.col}>
+                <Text style={styles.fieldLabel}>c) Meio de transporte:</Text>
+                <Text style={styles.fieldValue}>{formData.meioTransporte}</Text>
+              </View>
+            </View>
+          </View>
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>4. Destino:</Text>
-          <Text style={{ marginLeft: 10 }}>
-            a) Cidade e Estado:{" "}
-            <Text style={styles.fieldValue}>{formData.cidadeEstado}</Text>
+          <Text style={styles.sectionTitle}>4. Justificativa</Text>
+          <Text style={{ ...styles.content, minHeight: 40 }}>
+            {formData.justificativa || " "}
           </Text>
-          <Text style={{ marginLeft: 10 }}>
-            b) Local: <Text style={styles.fieldValue}>{formData.local}</Text>
-          </Text>
-          <Text style={{ marginLeft: 10 }}>
-            c) Meio de transporte:{" "}
-            <Text style={styles.fieldValue}>{formData.meioTransporte}</Text>
-          </Text>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>5. Justificativa:</Text>
-          <Text style={styles.fieldValue}>{formData.justificativa}</Text>
         </View>
 
         <View style={styles.table}>
@@ -173,19 +227,25 @@ const SolicitacaoViagemPdf = ({
             <View style={styles.tableColHeader}>
               <Text>Assinatura(s) do Participante</Text>
             </View>
-            <View style={{ ...styles.tableColHeader, borderRight: 0 }}>
+            <View style={{ ...styles.tableColHeader, borderRightWidth: 0 }}>
               <Text>Assinatura(s) do Chefe Imediato*</Text>
             </View>
           </View>
-          {participantes.map((p) => (
-            <View key={p.id} style={styles.tableRow}>
+          {participantes.map((p, index) => (
+            <View
+              key={p.id}
+              style={{
+                ...styles.tableRow,
+                borderBottomWidth: index === participantes.length - 1 ? 0 : 1,
+              }}
+            >
               <View style={styles.tableCol}>
                 <Text>{p.nome}</Text>
               </View>
               <View style={styles.tableCol}>
                 <Text> </Text>
               </View>
-              <View style={{ ...styles.tableCol, borderRight: 0 }}>
+              <View style={{ ...styles.tableCol, borderRightWidth: 0 }}>
                 <Text> </Text>
               </View>
             </View>
@@ -196,7 +256,14 @@ const SolicitacaoViagemPdf = ({
           trabalhos no setor em que o servidor está lotado.
         </Text>
 
-        <Text style={{ ...styles.footerText, textAlign: "right" }}>
+        <Text
+          style={{
+            ...styles.footerText,
+            textAlign: "right",
+            marginTop: 15,
+            marginBottom: 20,
+          }}
+        >
           Patos de Minas,{" "}
           {currentDate.toLocaleDateString("pt-BR", {
             day: "2-digit",
@@ -206,19 +273,21 @@ const SolicitacaoViagemPdf = ({
           .
         </Text>
 
-        <View style={styles.signatureBlock}>
-          <Text style={styles.signatureLine}></Text>
-          <Text style={{ fontSize: 8 }}>Divisão de Contabilidade</Text>
-          <Text style={styles.footerText}>
+        <View style={styles.signatureSection}>
+          <View style={styles.signatureLine} />
+          <Text style={styles.signatureText}>Divisão de Contabilidade</Text>
+          <Text style={{ ...styles.footerText, textAlign: "center" }}>
             Declaro haver dotação orçamentária e financeira suficiente para
             fazer face ao requerimento.
           </Text>
         </View>
 
-        <View style={styles.signatureBlock}>
-          <Text style={styles.signatureLine}></Text>
-          <Text style={{ fontSize: 8 }}>Presidente da Câmara Municipal</Text>
-          <Text style={styles.footerText}>
+        <View style={{ ...styles.signatureSection }}>
+          <View style={styles.signatureLine} />
+          <Text style={styles.signatureText}>
+            Presidente da Câmara Municipal
+          </Text>
+          <Text style={{ ...styles.footerText, textAlign: "center" }}>
             Fica autorizada a percepção de diárias de viagem conforme requerido.
           </Text>
         </View>

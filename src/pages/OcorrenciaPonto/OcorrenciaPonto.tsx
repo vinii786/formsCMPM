@@ -40,13 +40,25 @@ const OcorrenciaPonto = () => {
     setDocumentoPronto(null);
   };
 
+  // --- FUNÇÃO CORRIGIDA AQUI ---
   const handleOcorrenciaChange = (
     index: number,
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = e.target;
+    const { name, value, type } = e.target;
     const novasOcorrencias = [...ocorrencias];
-    novasOcorrencias[index] = { ...novasOcorrencias[index], [name]: value };
+
+    // Se o input for um radio, atualizamos a propriedade 'referente'
+    if (type === "radio") {
+      novasOcorrencias[index] = {
+        ...novasOcorrencias[index],
+        referente: value as "dia" | "entrada" | "saida",
+      };
+    } else {
+      // Caso contrário, atualizamos a propriedade com base no 'name' (para data, horario, justificativa)
+      novasOcorrencias[index] = { ...novasOcorrencias[index], [name]: value };
+    }
+
     setOcorrencias(novasOcorrencias);
     setDocumentoPronto(null);
   };
@@ -149,7 +161,7 @@ const OcorrenciaPonto = () => {
                 name={`referente-${ocorrencia.id}`}
                 value="dia"
                 checked={ocorrencia.referente === "dia"}
-                onChange={(e) => handleOcorrenciaChange(index, e as any)}
+                onChange={(e) => handleOcorrenciaChange(index, e)}
               />{" "}
               Dia todo
             </label>
@@ -159,7 +171,7 @@ const OcorrenciaPonto = () => {
                 name={`referente-${ocorrencia.id}`}
                 value="entrada"
                 checked={ocorrencia.referente === "entrada"}
-                onChange={(e) => handleOcorrenciaChange(index, e as any)}
+                onChange={(e) => handleOcorrenciaChange(index, e)}
               />{" "}
               Entrada
             </label>
@@ -169,7 +181,7 @@ const OcorrenciaPonto = () => {
                 name={`referente-${ocorrencia.id}`}
                 value="saida"
                 checked={ocorrencia.referente === "saida"}
-                onChange={(e) => handleOcorrenciaChange(index, e as any)}
+                onChange={(e) => handleOcorrenciaChange(index, e)}
               />{" "}
               Saída
             </label>

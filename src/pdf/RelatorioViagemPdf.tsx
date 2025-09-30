@@ -1,4 +1,5 @@
 // src/pdf/RelatorioViagemPdf.tsx
+import React from "react";
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 
 // Interfaces para a tipagem dos dados
@@ -34,7 +35,7 @@ interface FormData {
   };
 }
 
-// Estilos seguindo o padrão que já funcionou, sem complexidade
+// Estilos EXATAMENTE como no código que você forneceu
 const styles = StyleSheet.create({
   page: { fontFamily: "Helvetica", fontSize: 9, padding: 40 },
   bold: { fontFamily: "Helvetica-Bold" },
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
   signatureText: { fontSize: 9, alignSelf: "center", marginTop: 3 },
   // Estilos para as tabelas de despesas
   tableRow: { flexDirection: "row", borderBottom: "1px solid #000" },
-  tableCol: { flex: 2, padding: 4, borderRight: "1px solid #000" },
+  tableCol: { flex: 2, padding: 3, borderRight: "1px solid #000" },
   tableColHeader: { fontFamily: "Helvetica-Bold", backgroundColor: "#E0E0E0" },
 });
 
@@ -106,13 +107,22 @@ const RelatorioViagemPdf = ({ formData }: { formData: FormData }) => {
     parseFloat(formData.despesasRealizadas?.pedagio?.reembolsar || "0") +
     parseFloat(formData.despesasRealizadas?.estacionamento?.reembolsar || "0");
 
+  // Função para formatar a data
+  const formatDate = (dateString: string) => {
+    if (!dateString || dateString.indexOf("-") === -1) {
+      return " ";
+    }
+    const [year, month, day] = dateString.split("-");
+    return `${day}/${month}/${year}`;
+  };
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <Text style={styles.title}>RELATÓRIO DE VIAGEM</Text>
         <Text style={styles.subtitle}>PRESTAÇÃO DE CONTAS</Text>
 
-        {/* Seção Solicitante e Viagem - Layout Simplificado e Robusto */}
+        {/* CABEÇALHO MANTIDO INTACТО */}
         <View style={styles.section}>
           <View style={{ ...styles.content, paddingBottom: 0 }}>
             <View style={styles.row}>
@@ -139,13 +149,13 @@ const RelatorioViagemPdf = ({ formData }: { formData: FormData }) => {
               <View style={styles.col}>
                 <Text style={styles.fieldLabel}>DATA SAÍDA</Text>
                 <Text style={styles.fieldValue}>
-                  {formData.dataSaida || " "}
+                  {formatDate(formData.dataSaida)}
                 </Text>
               </View>
               <View style={styles.col}>
                 <Text style={styles.fieldLabel}>DATA RETORNO</Text>
                 <Text style={styles.fieldValue}>
-                  {formData.dataRetorno || " "}
+                  {formatDate(formData.dataRetorno)}
                 </Text>
               </View>
               <View style={styles.col}>
@@ -163,7 +173,7 @@ const RelatorioViagemPdf = ({ formData }: { formData: FormData }) => {
             DESCRIÇÃO DAS ATIVIDADES REALIZADAS (ANEXAR COMPROVANTES CONFORME
             ART. 8)
           </Text>
-          <Text style={{ ...styles.content, minHeight: 60 }}>
+          <Text style={{ ...styles.content, minHeight: 45 }}>
             {formData.descricaoAtividades || " "}
           </Text>
         </View>
@@ -196,7 +206,7 @@ const RelatorioViagemPdf = ({ formData }: { formData: FormData }) => {
               style={{
                 ...styles.tableCol,
                 ...styles.tableColHeader,
-                borderRight: 0,
+                borderRightWidth: 0,
               }}
             >
               <Text>VALOR A DEVOLVER</Text>
@@ -221,7 +231,7 @@ const RelatorioViagemPdf = ({ formData }: { formData: FormData }) => {
                 {formData.despesasAntecipadas?.passagem?.reembolsar || " "}
               </Text>
             </View>
-            <View style={{ ...styles.tableCol, borderRight: 0 }}>
+            <View style={{ ...styles.tableCol, borderRightWidth: 0 }}>
               <Text>
                 {formData.despesasAntecipadas?.passagem?.devolver || " "}
               </Text>
@@ -244,7 +254,7 @@ const RelatorioViagemPdf = ({ formData }: { formData: FormData }) => {
               style={{
                 ...styles.tableCol,
                 ...styles.tableColHeader,
-                borderRight: 0,
+                borderRightWidth: 0,
               }}
             >
               <Text>VALOR A REEMBOLSAR</Text>
@@ -263,7 +273,7 @@ const RelatorioViagemPdf = ({ formData }: { formData: FormData }) => {
                 {formData.despesasRealizadas?.combustivel?.utilizado || " "}
               </Text>
             </View>
-            <View style={{ ...styles.tableCol, borderRight: 0 }}>
+            <View style={{ ...styles.tableCol, borderRightWidth: 0 }}>
               <Text>
                 {formData.despesasRealizadas?.combustivel?.reembolsar || " "}
               </Text>
@@ -273,13 +283,13 @@ const RelatorioViagemPdf = ({ formData }: { formData: FormData }) => {
             <View style={{ ...styles.tableCol, flex: 3, textAlign: "left" }}>
               <Text>Transporte Urbano</Text>
             </View>
-            <View style={styles.col}>
+            <View style={styles.tableCol}>
               <Text>
                 {formData.despesasRealizadas?.transporteUrbano?.utilizado ||
                   " "}
               </Text>
             </View>
-            <View style={{ ...styles.col, borderRight: 0 }}>
+            <View style={{ ...styles.tableCol, borderRightWidth: 0 }}>
               <Text>
                 {formData.despesasRealizadas?.transporteUrbano?.reembolsar ||
                   " "}
@@ -287,45 +297,45 @@ const RelatorioViagemPdf = ({ formData }: { formData: FormData }) => {
             </View>
           </View>
           <View style={styles.row}>
-            <View style={{ ...styles.col, flex: 3, textAlign: "left" }}>
+            <View style={{ ...styles.tableCol, flex: 3, textAlign: "left" }}>
               <Text>Passagem (caso não tenha ocorrido antecipação)</Text>
             </View>
-            <View style={styles.col}>
+            <View style={styles.tableCol}>
               <Text>
                 {formData.despesasRealizadas?.passagem?.utilizado || " "}
               </Text>
             </View>
-            <View style={{ ...styles.col, borderRight: 0 }}>
+            <View style={{ ...styles.tableCol, borderRightWidth: 0 }}>
               <Text>
                 {formData.despesasRealizadas?.passagem?.reembolsar || " "}
               </Text>
             </View>
           </View>
           <View style={styles.row}>
-            <View style={{ ...styles.col, flex: 3, textAlign: "left" }}>
+            <View style={{ ...styles.tableCol, flex: 3, textAlign: "left" }}>
               <Text>Pedágio</Text>
             </View>
-            <View style={styles.col}>
+            <View style={styles.tableCol}>
               <Text>
                 {formData.despesasRealizadas?.pedagio?.utilizado || " "}
               </Text>
             </View>
-            <View style={{ ...styles.col, borderRight: 0 }}>
+            <View style={{ ...styles.tableCol, borderRightWidth: 0 }}>
               <Text>
                 {formData.despesasRealizadas?.pedagio?.reembolsar || " "}
               </Text>
             </View>
           </View>
           <View style={styles.row}>
-            <View style={{ ...styles.col, flex: 3, textAlign: "left" }}>
+            <View style={{ ...styles.tableCol, flex: 3, textAlign: "left" }}>
               <Text>Estacionamento</Text>
             </View>
-            <View style={styles.col}>
+            <View style={styles.tableCol}>
               <Text>
                 {formData.despesasRealizadas?.estacionamento?.utilizado || " "}
               </Text>
             </View>
-            <View style={{ ...styles.col, borderRight: 0 }}>
+            <View style={{ ...styles.tableCol, borderRightWidth: 0 }}>
               <Text>
                 {formData.despesasRealizadas?.estacionamento?.reembolsar || " "}
               </Text>
@@ -338,16 +348,16 @@ const RelatorioViagemPdf = ({ formData }: { formData: FormData }) => {
               <Text>TOTAL</Text>
             </View>
             <View style={{ ...styles.tableCol, ...styles.tableColHeader }}>
-              <Text>{totalUtilizado.toFixed(2)}</Text>
+              <Text>R$ {totalUtilizado.toFixed(2)}</Text>
             </View>
             <View
               style={{
                 ...styles.tableCol,
                 ...styles.tableColHeader,
-                borderRight: 0,
+                borderRightWidth: 0,
               }}
             >
-              <Text>{totalReembolsar.toFixed(2)}</Text>
+              <Text>R$ {totalReembolsar.toFixed(2)}</Text>
             </View>
           </View>
         </View>

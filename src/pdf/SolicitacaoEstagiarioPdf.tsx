@@ -155,20 +155,18 @@ const SolicitacaoEstagiarioPdf = ({ formData }: { formData: FormData }) => {
                 {formData.areaEstagio || " "}
               </Text>
             </View>
-          </View>
-          <View style={styles.row}>
             <View style={styles.col}>
               <Text style={styles.fieldLabel}>SUPERVISOR:</Text>
               <Text style={styles.fieldValue}>
                 {formData.supervisor || " "}
               </Text>
             </View>
+          </View>
+          <View style={styles.row}>
             <View style={styles.col}>
               <Text style={styles.fieldLabel}>CARGO:</Text>
               <Text style={styles.fieldValue}>{formData.cargo || " "}</Text>
             </View>
-          </View>
-          <View style={styles.row}>
             <View style={styles.col}>
               <Text style={styles.fieldLabel}>HORÁRIO DE ESTÁGIO:</Text>
               <Text style={styles.fieldValue}>{formData.horario || " "}</Text>

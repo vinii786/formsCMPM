@@ -127,15 +127,17 @@ const RelatorioViagem = () => {
             value={formData.destino}
             onChange={handleInputChange}
           />
+          <p>Data Saída</p>
           <input
-            type="text"
+            type="date"
             name="dataSaida"
             placeholder="Data Saída"
             value={formData.dataSaida}
             onChange={handleInputChange}
           />
+          <p>Data Retorno</p>
           <input
-            type="text"
+            type="date"
             name="dataRetorno"
             placeholder="Data Retorno"
             value={formData.dataRetorno}

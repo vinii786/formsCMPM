@@ -78,28 +78,6 @@ const SolicitacaoViagem = () => {
 
   return (
     <div className="form-container">
-      <h2>Solicitação de Viagem</h2>
-
-      <div className="form-section">
-        <h3>1. Quem participará da viagem</h3>
-        <div className="form-grid">
-          <input
-            type="number"
-            name="numVereadores"
-            placeholder="Nº de Vereadores"
-            value={formData.numVereadores}
-            onChange={handleInputChange}
-          />
-          <input
-            type="number"
-            name="numServidores"
-            placeholder="Nº de Servidores"
-            value={formData.numServidores}
-            onChange={handleInputChange}
-          />
-        </div>
-      </div>
-
       <div className="form-section">
         <h3>Participantes</h3>
         {participantes.map((p, index) => (
@@ -108,7 +86,7 @@ const SolicitacaoViagem = () => {
               type="text"
               value={p.nome}
               onChange={(e) => handleParticipanteChange(index, e)}
-              placeholder={`Nome do Participante #${index + 1}`}
+              placeholder={`Nome do Participante`}
               className="form-input-full"
             />
             {participantes.length > 1 && (

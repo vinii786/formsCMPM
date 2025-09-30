@@ -11,10 +11,10 @@ interface FormData {
   cienteLgpd: boolean;
 }
 
-// Estilos ultra-seguros, sem nenhuma propriedade 'border'
+// Estilos revisados para um layout mais profissional
 const styles = StyleSheet.create({
-  page: { fontFamily: "Helvetica", fontSize: 10, padding: 50, color: "#333" },
-  header: { textAlign: "center", marginBottom: 10 },
+  page: { fontFamily: "Helvetica", fontSize: 10, padding: 40, color: "#333" },
+  header: { textAlign: "center", marginBottom: 20 },
   bold: { fontFamily: "Helvetica-Bold" },
   headerText: { fontSize: 9, color: "grey", lineHeight: 1.3 },
   title: {
@@ -22,28 +22,49 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica-Bold",
     textAlign: "center",
     textDecoration: "underline",
-    margin: "20px 0",
+    margin: "15px 0",
   },
-
+  section: {
+    borderWidth: 1,
+    borderColor: "#000",
+    marginBottom: 10,
+  },
   sectionTitle: {
     padding: 4,
     backgroundColor: "#E0E0E0",
     fontFamily: "Helvetica-Bold",
     textAlign: "center",
-    marginBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#000",
   },
-  fieldContainer: {
-    marginBottom: 10,
+  content: {
+    padding: 8,
+  },
+  row: {
+    flexDirection: "row",
+    marginBottom: 8,
+  },
+  col: {
+    flex: 1,
+    paddingRight: 10,
   },
   fieldLabel: {
-    fontSize: 9,
+    fontSize: 8,
     fontFamily: "Helvetica-Bold",
+    marginBottom: 2,
   },
   fieldValue: {
-    fontSize: 10,
-    paddingTop: 2,
+    fontSize: 9,
+    borderBottomWidth: 1,
+    borderBottomStyle: "dotted",
+    borderBottomColor: "#000",
+    paddingBottom: 2,
+    minHeight: 12,
   },
   textAreaValue: {
+    borderWidth: 1,
+    borderStyle: "dotted",
+    borderColor: "#000",
     minHeight: 60,
     padding: 4,
     marginTop: 2,
@@ -59,10 +80,21 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica-Bold",
     textDecoration: "underline",
     marginBottom: 5,
-    marginTop: 20,
+    marginTop: 15,
   },
-  signatureSection: { marginTop: 40, alignItems: "center" },
-  signatureText: { fontSize: 10, marginTop: 3 },
+  signatureSection: {
+    marginTop: 30,
+    alignItems: "center",
+  },
+  signatureLine: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#000",
+    width: "60%",
+  },
+  signatureText: {
+    fontSize: 10,
+    marginTop: 3,
+  },
 });
 
 const SolicitacaoDocumentosPdf = ({ formData }: { formData: FormData }) => {
@@ -85,65 +117,63 @@ const SolicitacaoDocumentosPdf = ({ formData }: { formData: FormData }) => {
           SOLICITAÇÃO DE PASTA FUNCIONAL E/OU DOCUMENTO
         </Text>
 
-        <Text style={styles.sectionTitle}>IDENTIFICAÇÃO DO SOLICITANTE</Text>
-        <View style={{ paddingHorizontal: 8 }}>
-          <View style={styles.fieldContainer}>
-            <Text style={styles.fieldLabel}>NOME:</Text>
-            <Text style={styles.fieldValue}>
-              {formData.nome ||
-                "...................................................................................."}
-            </Text>
-          </View>
-          <View style={styles.fieldContainer}>
-            <Text style={styles.fieldLabel}>CPF:</Text>
-            <Text style={styles.fieldValue}>
-              {formData.cpf ||
-                "...................................................................................."}
-            </Text>
-          </View>
-          <View style={styles.fieldContainer}>
-            <Text style={styles.fieldLabel}>E-MAIL:</Text>
-            <Text style={styles.fieldValue}>
-              {formData.email ||
-                "...................................................................................."}
-            </Text>
-          </View>
-          <View style={styles.fieldContainer}>
-            <Text style={styles.fieldLabel}>CONTATO:</Text>
-            <Text style={styles.fieldValue}>
-              {formData.contato ||
-                "...................................................................................."}
-            </Text>
+        {/* Seção de Identificação agora com borda */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>IDENTIFICAÇÃO DO SOLICITANTE</Text>
+          <View style={styles.content}>
+            <View style={styles.row}>
+              <View style={styles.col}>
+                <Text style={styles.fieldLabel}>NOME:</Text>
+                <Text style={styles.fieldValue}>{formData.nome || " "}</Text>
+              </View>
+              <View style={styles.col}>
+                <Text style={styles.fieldLabel}>CPF:</Text>
+                <Text style={styles.fieldValue}>{formData.cpf || " "}</Text>
+              </View>
+            </View>
+            <View style={{ ...styles.row, marginBottom: 0 }}>
+              <View style={styles.col}>
+                <Text style={styles.fieldLabel}>E-MAIL:</Text>
+                <Text style={styles.fieldValue}>{formData.email || " "}</Text>
+              </View>
+              <View style={styles.col}>
+                <Text style={styles.fieldLabel}>CONTATO:</Text>
+                <Text style={styles.fieldValue}>{formData.contato || " "}</Text>
+              </View>
+            </View>
           </View>
         </View>
 
-        <Text style={{ fontSize: 9, marginTop: 15 }}>
+        <Text style={{ fontSize: 9, marginBottom: 5 }}>
           Venho, por meio deste, requerer cópia dos seguintes documentos
           constantes da Divisão de Recursos Humanos
         </Text>
 
-        <Text style={styles.sectionTitle}>DADOS DA SOLICITAÇÃO</Text>
-        <View style={{ paddingHorizontal: 8 }}>
-          <Text style={styles.fieldLabel}>
-            Descrever os documentos solicitados - (ex: ficha funcional, termo de
-            posse, etc).
-          </Text>
-          <Text style={styles.textAreaValue}>
-            {formData.documentosSolicitados || " "}
-          </Text>
+        {/* Seção de Dados da Solicitação agora com borda */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>DADOS DA SOLICITAÇÃO</Text>
+          <View style={styles.content}>
+            <Text style={styles.fieldLabel}>
+              Descrever os documentos solicitados - (ex: ficha funcional, termo
+              de posse, etc).
+            </Text>
+            <Text style={styles.textAreaValue}>
+              {formData.documentosSolicitados || " "}
+            </Text>
 
-          <Text style={{ marginTop: 15, fontSize: 9, lineHeight: 1.3 }}>
-            {formData.cienteLgpd ? "[X]" : "[ ]"} Declaro estar ciente da Lei nº
-            13.709, de 14 de agosto de 2018 - Lei Geral de Proteção de Dados
-            Pessoais (LGPD).
-          </Text>
+            <Text style={{ marginTop: 10, fontSize: 9, lineHeight: 1.3 }}>
+              {formData.cienteLgpd ? "[X]" : "[ ]"} Declaro estar ciente da Lei
+              nº 13.709, de 14 de agosto de 2018 - Lei Geral de Proteção de
+              Dados Pessoais (LGPD).
+            </Text>
 
-          <Text style={{ ...styles.fieldLabel, marginTop: 15 }}>
-            Justificativa do pedido de cópia:
-          </Text>
-          <Text style={styles.textAreaValue}>
-            {formData.justificativa || " "}
-          </Text>
+            <Text style={{ ...styles.fieldLabel, marginTop: 10 }}>
+              Justificativa do pedido de cópia:
+            </Text>
+            <Text style={styles.textAreaValue}>
+              {formData.justificativa || " "}
+            </Text>
+          </View>
         </View>
 
         <View>
@@ -174,7 +204,7 @@ const SolicitacaoDocumentosPdf = ({ formData }: { formData: FormData }) => {
         </Text>
 
         <View style={styles.signatureSection}>
-          <Text>____________________________________________________</Text>
+          <View style={styles.signatureLine} />
           <Text style={styles.signatureText}>Assinatura do Requerente</Text>
         </View>
       </Page>

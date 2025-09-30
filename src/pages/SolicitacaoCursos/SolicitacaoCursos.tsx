@@ -5,7 +5,6 @@ import SolicitacaoCursosPdf from "../../pdf/SolicitacaoCursosPdf";
 import "../FormularioFerias/FormularioFerias.css";
 
 interface FormData {
-  // Seção I
   nome: string;
   endereco: string;
   celular: string;
@@ -19,8 +18,7 @@ interface FormData {
   funcaoConfianca: "sim" | "nao";
   tipoFuncao: "direcao" | "gratificada" | "nenhum";
   qualFuncao: string;
-  // Seção II
-  descricaoCurso: string; // NOVO CAMPO
+  descricaoCurso: string;
   fornecedor: string;
   cnpj: string;
   contato: string;
@@ -32,7 +30,6 @@ interface FormData {
   cargaHorariaDiaria: string;
   usoProgressao: "sim" | "nao";
   formaApresentacao: string;
-  // Seção III
   solicitaInscricao: "sim" | "nao";
   valorInscricao: string;
   solicitaMensalidade: "sim" | "nao";
@@ -55,7 +52,7 @@ const SolicitacaoCursos = () => {
     funcaoConfianca: "nao",
     tipoFuncao: "nenhum",
     qualFuncao: "",
-    descricaoCurso: "", // NOVO CAMPO
+    descricaoCurso: "",
     fornecedor: "",
     cnpj: "",
     contato: "",
@@ -277,15 +274,8 @@ const SolicitacaoCursos = () => {
           />
           <input
             type="text"
-            name="periodoRealizacao"
-            placeholder="Período de Realização"
-            value={formData.periodoRealizacao}
-            onChange={handleInputChange}
-          />
-          <input
-            type="text"
             name="inicioTermino"
-            placeholder="Início/Término"
+            placeholder="Início/Término Ex: 02/10/2025 a 15/12/2025"
             value={formData.inicioTermino}
             onChange={handleInputChange}
           />

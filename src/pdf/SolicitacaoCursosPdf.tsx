@@ -1,4 +1,3 @@
-// src/pdf/SolicitacaoCursosPdf.tsx
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 
 interface FormData {
@@ -15,7 +14,7 @@ interface FormData {
   funcaoConfianca: "sim" | "nao";
   tipoFuncao: "direcao" | "gratificada" | "nenhum";
   qualFuncao: string;
-  descricaoCurso: string; // NOVO CAMPO
+  descricaoCurso: string;
   fornecedor: string;
   cnpj: string;
   contato: string;
@@ -58,6 +57,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     borderBottom: "1px dotted #000",
     paddingBottom: 2,
+    paddingRight: 2,
     minHeight: 12,
   },
   parecerBox: {
@@ -144,7 +144,8 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
             </View>
             <Text>
               Função de Confiança:{" "}
-              {formData.funcaoConfianca === "sim" ? "[X] Sim" : "[ ] Sim"}{" "}
+              {formData.funcaoConfianca === "sim" ? "[X] Sim" : "[ ] Sim"}
+              {"   "}
               {formData.funcaoConfianca === "nao" ? "[X] Não" : "[ ] Não"}
             </Text>
             {formData.funcaoConfianca === "sim" && (
@@ -152,7 +153,8 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
                 Tipo:{" "}
                 {formData.tipoFuncao === "direcao"
                   ? "[X] Cargo de Direção"
-                  : "[ ] Cargo de Direção"}{" "}
+                  : "[ ] Cargo de Direção"}
+                {"   "}
                 {formData.tipoFuncao === "gratificada"
                   ? "[X] Função Gratificada"
                   : "[ ] Função Gratificada"}{" "}
@@ -166,7 +168,6 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>II - IDENTIFICAÇÃO DO CURSO</Text>
           <View style={styles.content}>
-            {/* NOVO CAMPO ADICIONADO AQUI */}
             <View style={styles.row}>
               <View style={{ flex: 1 }}>
                 <Text style={styles.fieldLabel}>Descrição do Curso:</Text>
@@ -174,38 +175,30 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
               </View>
             </View>
             <View style={styles.row}>
-              <View style={{ flex: 1 }}>
+              <View style={styles.col}>
                 <Text style={styles.fieldLabel}>Dados do Fornecedor:</Text>
                 <Text style={styles.fieldValue}>{formData.fornecedor}</Text>
               </View>
-            </View>
-            <View style={styles.row}>
               <View style={styles.col}>
                 <Text style={styles.fieldLabel}>CNPJ:</Text>
                 <Text style={styles.fieldValue}>{formData.cnpj}</Text>
               </View>
+            </View>
+            <View style={styles.row}>
               <View style={styles.col}>
                 <Text style={styles.fieldLabel}>Contato:</Text>
                 <Text style={styles.fieldValue}>{formData.contato}</Text>
               </View>
-            </View>
-            <View style={styles.row}>
               <View style={styles.col}>
                 <Text style={styles.fieldLabel}>WHATSAPP:</Text>
                 <Text style={styles.fieldValue}>{formData.whatsapp}</Text>
               </View>
+            </View>
+            <View style={styles.row}>
               <View style={styles.col}>
                 <Text style={styles.fieldLabel}>E-mail:</Text>
                 <Text style={styles.fieldValue}>
                   {formData.emailFornecedor}
-                </Text>
-              </View>
-            </View>
-            <View style={styles.row}>
-              <View style={styles.col}>
-                <Text style={styles.fieldLabel}>Período da Realização:</Text>
-                <Text style={styles.fieldValue}>
-                  {formData.periodoRealizacao}
                 </Text>
               </View>
               <View style={styles.col}>
@@ -240,7 +233,8 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
             <Text>
               Utilização da capacitação para fins de progressão na carreira
               profissional?{" "}
-              {formData.usoProgressao === "sim" ? "[X] sim" : "[ ] sim"}{" "}
+              {formData.usoProgressao === "sim" ? "[X] sim" : "[ ] sim"}
+              {"   "}
               {formData.usoProgressao === "nao" ? "[X] não" : "[ ] não"}
             </Text>
           </View>
@@ -256,7 +250,8 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
               <View style={styles.col}>
                 <Text>
                   Inscrição:{" "}
-                  {formData.solicitaInscricao === "sim" ? "[X] Sim" : "[ ] Sim"}{" "}
+                  {formData.solicitaInscricao === "sim" ? "[X] Sim" : "[ ] Sim"}
+                  {"   "}
                   {formData.solicitaInscricao === "nao" ? "[X] Não" : "[ ] Não"}
                 </Text>
               </View>
@@ -273,7 +268,8 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
                   Mensalidade:{" "}
                   {formData.solicitaMensalidade === "sim"
                     ? "[X] Sim"
-                    : "[ ] Sim"}{" "}
+                    : "[ ] Sim"}
+                  {"   "}
                   {formData.solicitaMensalidade === "nao"
                     ? "[X] Não"
                     : "[ ] Não"}
