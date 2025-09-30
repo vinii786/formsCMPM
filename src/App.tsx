@@ -13,7 +13,11 @@ function App() {
   return (
     <div className="app-container">
       <header className="app-header">
-        <Link to="/" className="header-link">
+        <Link
+          to="/"
+          className="header-link"
+          style={{ textDecoration: "none", color: "rgb(0, 86, 179)" }}
+        >
           <h1>Câmara Municipal de Patos de Minas</h1>
         </Link>
       </header>
