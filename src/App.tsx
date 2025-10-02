@@ -8,6 +8,10 @@ import SolicitacaoViagem from "./pages/SolicitacaoViagem/SolicitacaoViagem";
 import Adiantamento13 from "./pages/Adiantamento13/Adiantamento13";
 import RelatorioViagem from "./pages/RelatorioViagem/RelatorioViagem";
 import SolicitacaoDocumentos from "./pages/SolicitacaoDocumentos/SolicitacaoDocumentos";
+import DeclaracaoDependentes from "./pages/DeclaracaoDependentes/DeclaracaoDependentes";
+import DeclaracaoNaoOcupacao from "./pages/DeclaracaoNaoOcupacao/DeclaracaoNaoOcupacao";
+import DeclaracaoNepotismo from "./pages/DeclaracaoNepotismo/DeclaracaoNepotismo";
+import DeclaracaoFichaLimpa from "./pages/DeclaracaoFichaLimpa/DeclaracaoFichaLimpa";
 
 function App() {
   return (
@@ -38,6 +42,22 @@ function App() {
           <Route
             path="/solicitacao-documentos"
             element={<SolicitacaoDocumentos />}
+          />
+          <Route
+            path="/declaracao-dependentes"
+            element={<DeclaracaoDependentes />}
+          />
+          <Route
+            path="/declaracao-nao-ocupacao"
+            element={<DeclaracaoNaoOcupacao />}
+          />
+          <Route
+            path="/declaracao-nepotismo"
+            element={<DeclaracaoNepotismo />}
+          />
+          <Route
+            path="/declaracao-ficha-limpa"
+            element={<DeclaracaoFichaLimpa />}
           />
         </Routes>
       </main>

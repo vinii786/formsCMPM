@@ -10,6 +10,8 @@ import {
   FaFileAlt,
   FaMoneyBillWave,
   FaReceipt,
+  FaUserCheck,
+  FaUserShield,
 } from "react-icons/fa";
 
 const HomePage = () => {
@@ -64,6 +66,30 @@ const HomePage = () => {
           description="Requerimento da antecipação da primeira parcela do 13º salário."
           linkTo="/adiantamento-13"
           icon={<FaMoneyBillWave />}
+        />
+        <FormCard
+          title="Declaração de Dependentes"
+          description="Formulário para declaração de dependentes para fins de imposto de renda."
+          linkTo="/declaracao-dependentes"
+          icon={<FaUserGraduate />}
+        />
+        <FormCard
+          title="Não Ocupação de Cargos"
+          description="Declaração quanto a ocupação de cargos públicos."
+          linkTo="/declaracao-nao-ocupacao"
+          icon={<FaFileAlt />} // Exemplo de ícone, pode trocar
+        />
+        <FormCard
+          title="Declaração de Nepotismo"
+          description="Declaração sobre inexistência de nepotismo (LC 274 e Súmula 13 STF)."
+          linkTo="/declaracao-nepotismo"
+          icon={<FaUserCheck />}
+        />
+        <FormCard
+          title="Declaração Ficha Limpa"
+          description="Declaração para fins de provimento em cargo comissionado (LC 356/2011)."
+          linkTo="/declaracao-ficha-limpa"
+          icon={<FaUserShield />}
         />
       </div>
     </div>
