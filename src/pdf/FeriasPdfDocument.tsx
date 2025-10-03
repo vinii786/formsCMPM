@@ -105,6 +105,7 @@ const FeriasPdfDocument: React.FC<PdfProps> = ({ data }) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
+        {/* cabeçalho padrao*/}
         <View style={styles.header}>
           <Text style={{ fontFamily: "Helvetica-Bold" }}>
             CÂMARA MUNICIPAL DE PATOS DE MINAS

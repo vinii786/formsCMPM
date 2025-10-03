@@ -40,11 +40,12 @@ const styles = StyleSheet.create({
   page: { fontFamily: "Helvetica", fontSize: 9, padding: 40 },
   bold: { fontFamily: "Helvetica-Bold" },
   title: {
-    fontSize: 12,
+    fontSize: 10,
     textAlign: "center",
     fontFamily: "Helvetica-Bold",
     marginBottom: 5,
   },
+  dateText: { textAlign: "left", marginTop: 10 },
   subtitle: {
     fontSize: 10,
     textAlign: "center",
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     fontSize: 9,
     textAlign: "justify",
     lineHeight: 1.4,
-    marginTop: 5,
+    marginTop: 2,
   },
   signatureLine: {
     borderBottom: "1px solid #000",
@@ -115,6 +116,13 @@ const RelatorioViagemPdf = ({ formData }: { formData: FormData }) => {
     const [year, month, day] = dateString.split("-");
     return `${day}/${month}/${year}`;
   };
+
+  const currentDate = new Date();
+  const formattedDate = currentDate.toLocaleDateString("pt-BR", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
 
   return (
     <Document>
@@ -374,6 +382,9 @@ const RelatorioViagemPdf = ({ formData }: { formData: FormData }) => {
               objetivos informados no momento da solicitação. Estou ciente de
               que a prestação de informações inveridicas pode acarretar as
               sanções cabíveis.
+            </Text>
+            <Text style={styles.dateText}>
+              Patos de Minas, {formattedDate}.
             </Text>
             <View style={styles.signatureLine} />
             <Text style={styles.signatureText}>Assinatura do Solicitante</Text>
