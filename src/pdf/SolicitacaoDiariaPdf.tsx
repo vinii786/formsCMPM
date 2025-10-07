@@ -1,4 +1,4 @@
-// src/pdf/SolicitacaoDiariaPdf.tsx
+
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 
 // Interface dos dados
@@ -16,6 +16,7 @@ interface FormData {
   periodoViagem: string;
   meioTransporte: "carro" | "onibus" | "aereo" | "outro";
   placaCarro: string;
+  outroTransporte: string; // Adicionado este campo
   diariasInteiras: string;
   diariasReduzidas: string;
   solicitaAntecipacao: "sim" | "nao";
@@ -67,7 +68,6 @@ const styles = StyleSheet.create({
 const SolicitacaoDiariaPdf = ({ formData }: { formData: FormData }) => {
   return (
     <Document>
-      {/* PÁGINA 1 */}
       <Page size="A4" style={styles.page}>
         <Text style={styles.title}>SOLICITAÇÃO DE DIÁRIA/PASSAGEM</Text>
 
@@ -93,21 +93,14 @@ const SolicitacaoDiariaPdf = ({ formData }: { formData: FormData }) => {
                 <Text style={styles.fieldLabel}>Banco</Text>
                 <Text style={styles.fieldValue}>{formData.banco}</Text>
               </View>
-
-              {/* --- CORREÇÃO APLICADA AQUI --- */}
               <View style={styles.col}>
                 <Text style={styles.fieldLabel}>Tipo de Conta</Text>
                 <Text style={styles.fieldValue}>
-                  {formData.tipoConta === "corrente"
-                    ? "(X) Corrente"
-                    : "( ) Corrente"}
+                  {formData.tipoConta === "corrente" ? "(X) Corrente" : "( ) Corrente"}
                   {"  "}
-                  {formData.tipoConta === "poupanca"
-                    ? "(X) Poupança"
-                    : "( ) Poupança"}
+                  {formData.tipoConta === "poupanca" ? "(X) Poupança" : "( ) Poupança"}
                 </Text>
               </View>
-
               <View style={styles.col}>
                 <Text style={styles.fieldLabel}>Agência</Text>
                 <Text style={styles.fieldValue}>{formData.agencia}</Text>
@@ -128,31 +121,22 @@ const SolicitacaoDiariaPdf = ({ formData }: { formData: FormData }) => {
           <View style={{ ...styles.section, flex: 2, marginRight: 5 }}>
             <Text style={styles.sectionTitle}>DESTINO</Text>
             <View style={{ ...styles.content, flexDirection: "row" }}>
-              <View style={styles.col}>
-                <Text style={styles.fieldLabel}>CIDADE</Text>
-                <Text style={styles.fieldValue}>{formData.cidade}</Text>
-              </View>
-              <View style={styles.col}>
-                <Text style={styles.fieldLabel}>ESTADO</Text>
-                <Text style={styles.fieldValue}>{formData.estado}</Text>
-              </View>
-              <View style={{ ...styles.col, ...styles.lastCol }}>
-                <Text style={styles.fieldLabel}>PERÍODO DA VIAGEM</Text>
-                <Text style={styles.fieldValue}>{formData.periodoViagem}</Text>
-              </View>
+              <View style={styles.col}><Text style={styles.fieldLabel}>CIDADE</Text><Text style={styles.fieldValue}>{formData.cidade}</Text></View>
+              <View style={styles.col}><Text style={styles.fieldLabel}>ESTADO</Text><Text style={styles.fieldValue}>{formData.estado}</Text></View>
+              <View style={{ ...styles.col, ...styles.lastCol }}><Text style={styles.fieldLabel}>PERÍODO DA VIAGEM</Text><Text style={styles.fieldValue}>{formData.periodoViagem}</Text></View>
             </View>
           </View>
           <View style={{ ...styles.section, flex: 1 }}>
             <Text style={styles.sectionTitle}>MEIO DE TRANSPORTE</Text>
             <View style={{ ...styles.content, fontSize: 8 }}>
               <Text>
-                {formData.meioTransporte === "carro" ? "[X]" : "[ ]"} Carro
-                Placa: {formData.placaCarro}
+                {formData.meioTransporte === "carro" ? "[X]" : "[ ]"} Carro Placa: {formData.placaCarro}
               </Text>
+              {/* CAMPO 'OUTRO' CORRIGIDO AQUI */}
               <Text>
                 {formData.meioTransporte === "onibus" ? "[X]" : "[ ]"} Ônibus{" "}
                 {formData.meioTransporte === "aereo" ? "[X]" : "[ ]"} Aéreo{" "}
-                {formData.meioTransporte === "outro" ? "[X]" : "[ ]"} Outro
+                {formData.meioTransporte === "outro" ? "[X]" : "[ ]"} Outro: {formData.outroTransporte || ''}
               </Text>
             </View>
           </View>
@@ -168,13 +152,7 @@ const SolicitacaoDiariaPdf = ({ formData }: { formData: FormData }) => {
         </View>
 
         <View style={{ ...styles.section, flexDirection: "row" }}>
-          <View
-            style={{
-              ...styles.content,
-              flex: 1,
-              borderRight: "1px solid #000",
-            }}
-          >
+          <View style={{...styles.content, flex: 1, borderRight: "1px solid #000",}}>
             <Text style={{ fontFamily: "Helvetica-Bold", textAlign: "center" }}>
               DIÁRIAS
             </Text>
@@ -187,13 +165,7 @@ const SolicitacaoDiariaPdf = ({ formData }: { formData: FormData }) => {
             <Text style={{ fontFamily: "Helvetica-Bold", textAlign: "center" }}>
               SOLICITAÇÃO DE ANTECIPAÇÃO - ART. 3º, PARAGRAFO ÚNICO
             </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-around",
-                marginTop: 5,
-              }}
-            >
+            <View style={{flexDirection: "row", justifyContent: "space-around", marginTop: 5,}}>
               <Text>
                 ({formData.solicitaAntecipacao === "sim" ? "X" : " "})SIM (
                 {formData.solicitaAntecipacao === "nao" ? "X" : " "})NÃO
@@ -236,8 +208,6 @@ const SolicitacaoDiariaPdf = ({ formData }: { formData: FormData }) => {
           </View>
         </View>
       </Page>
-
-      {/* PÁGINA 2 */}
       <Page size="A4" style={styles.page}>
         <View style={{ ...styles.section, height: "30%" }}>
           <Text style={styles.sectionTitle}>
