@@ -158,7 +158,7 @@ const SolicitacaoViagemPdf = ({
           EXCELENTÍSSIMO SENHOR PRESIDENTE DA CÂMARA MUNICIPAL DE PATOS DE MINAS
         </Text>
         <Text style={styles.introText}>
-          Em atendimento ao disposto na Resolução nº 276/12, requeiro a Vossa
+          Em atendimento ao disposto na Resolução nº 323 de 14 de março de 2025, requeiro a Vossa
           Excelência autorização para desempenho de missão temporária, de
           caráter representativo ou cultural, a qual será custeada por diárias
           pagas pelo poder público.
