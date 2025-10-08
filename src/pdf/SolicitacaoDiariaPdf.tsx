@@ -1,4 +1,3 @@
-
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 
 // Interface dos dados
@@ -16,7 +15,7 @@ interface FormData {
   periodoViagem: string;
   meioTransporte: "carro" | "onibus" | "aereo" | "outro";
   placaCarro: string;
-  outroTransporte: string; // Adicionado este campo
+  outroTransporte: string;
   diariasInteiras: string;
   diariasReduzidas: string;
   solicitaAntecipacao: "sim" | "nao";
@@ -75,41 +74,43 @@ const SolicitacaoDiariaPdf = ({ formData }: { formData: FormData }) => {
           <Text style={styles.sectionTitle}>SOLICITANTE</Text>
           <View style={styles.content}>
             <View style={styles.row}>
-              <View style={{ ...styles.col, flex: 2 }}>
+              {/* ALTERAÇÃO AQUI: Nome (reduzido), Matrícula (reduzido) e Cargo (aumentado) */}
+              <View style={{ ...styles.col, flex: 1.5 }}>
                 <Text style={styles.fieldLabel}>NOME</Text>
                 <Text style={styles.fieldValue}>{formData.nome}</Text>
               </View>
-              <View style={styles.col}>
+              <View style={{ ...styles.col, flex: 0.5 }}>
                 <Text style={styles.fieldLabel}>MATRÍCULA</Text>
                 <Text style={styles.fieldValue}>{formData.matricula}</Text>
               </View>
-              <View style={{ ...styles.col, ...styles.lastCol }}>
+              <View style={{ ...styles.col, flex: 2, ...styles.lastCol }}>
                 <Text style={styles.fieldLabel}>CARGO</Text>
                 <Text style={styles.fieldValue}>{formData.cargo}</Text>
               </View>
             </View>
             <View style={styles.row}>
-              <View style={styles.col}>
+              {/* ALTERAÇÃO AQUI: Banco (aumentado), Agência (reduzido) e Conta (reduzido) */}
+              <View style={{ ...styles.col, flex: 2 }}>
                 <Text style={styles.fieldLabel}>Banco</Text>
                 <Text style={styles.fieldValue}>{formData.banco}</Text>
               </View>
-              <View style={styles.col}>
+              <View style={{ ...styles.col, flex: 1.25 }}>
                 <Text style={styles.fieldLabel}>Tipo de Conta</Text>
                 <Text style={styles.fieldValue}>
                   {formData.tipoConta === "corrente" ? "(X) Corrente" : "( ) Corrente"}
-                  {"  "}
+                  {"   "}
                   {formData.tipoConta === "poupanca" ? "(X) Poupança" : "( ) Poupança"}
                 </Text>
               </View>
-              <View style={styles.col}>
+              <View style={{ ...styles.col, flex: 0.75 }}>
                 <Text style={styles.fieldLabel}>Agência</Text>
                 <Text style={styles.fieldValue}>{formData.agencia}</Text>
               </View>
-              <View style={styles.col}>
+              <View style={{ ...styles.col, flex: 1 }}>
                 <Text style={styles.fieldLabel}>Conta</Text>
                 <Text style={styles.fieldValue}>{formData.conta}</Text>
               </View>
-              <View style={{ ...styles.col, ...styles.lastCol }}>
+              <View style={{ ...styles.col, flex: 1, ...styles.lastCol }}>
                 <Text style={styles.fieldLabel}>Pix</Text>
                 <Text style={styles.fieldValue}>{formData.pix}</Text>
               </View>
@@ -117,6 +118,7 @@ const SolicitacaoDiariaPdf = ({ formData }: { formData: FormData }) => {
           </View>
         </View>
 
+        {/* O restante do documento permanece inalterado */}
         <View style={{ ...styles.row, marginBottom: 0 }}>
           <View style={{ ...styles.section, flex: 2, marginRight: 5 }}>
             <Text style={styles.sectionTitle}>DESTINO</Text>
@@ -132,7 +134,6 @@ const SolicitacaoDiariaPdf = ({ formData }: { formData: FormData }) => {
               <Text>
                 {formData.meioTransporte === "carro" ? "[X]" : "[ ]"} Carro Placa: {formData.placaCarro}
               </Text>
-              {/* CAMPO 'OUTRO' CORRIGIDO AQUI */}
               <Text>
                 {formData.meioTransporte === "onibus" ? "[X]" : "[ ]"} Ônibus{" "}
                 {formData.meioTransporte === "aereo" ? "[X]" : "[ ]"} Aéreo{" "}
