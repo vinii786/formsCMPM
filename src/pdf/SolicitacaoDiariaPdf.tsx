@@ -34,6 +34,13 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica-Bold",
     marginBottom: 15,
   },
+  // --- ESTILO ADICIONADO PARA O TEXTO DA CARTA ---
+  introText: {
+    fontSize: 9,
+    textAlign: "justify",
+    lineHeight: 1.5,
+    marginBottom: 10,
+  },
   section: { border: "1px solid #000", marginBottom: 5 },
   sectionTitle: {
     padding: 3,
@@ -92,6 +99,19 @@ const SolicitacaoDiariaPdf = ({ formData }: { formData: FormData }) => {
 
         <Text style={styles.title}>SOLICITAÇÃO DE DIÁRIA/PASSAGEM</Text>
 
+        {/* --- TEXTO ADICIONADO CONFORME A IMAGEM --- */}
+        <Text style={{...styles.bold, textAlign: 'center', fontSize: 10, marginBottom: 10}}>
+          EXCELENTÍSSIMO SENHOR PRESIDENTE DA CÂMARA MUNICIPAL DE PATOS DE MINAS
+        </Text>
+        <Text style={styles.introText}>
+          Em atendimento ao disposto na Resolução nº 323, De 14 De Março De 2025, requeiro a Vossa Excelência autorização para desempenho de
+          missão temporária, de caráter representativo ou cultural, a qual será custeada por diárias pagas pelo poder público.
+        </Text>
+        <Text style={styles.introText}>
+          Para tanto, especifico o seguinte:
+        </Text>
+        {/* ------------------------------------------- */}
+
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>SOLICITANTE</Text>
           <View style={styles.content}>
@@ -109,7 +129,9 @@ const SolicitacaoDiariaPdf = ({ formData }: { formData: FormData }) => {
                 <Text style={styles.fieldValue}>{formData.cargo}</Text>
               </View>
             </View>
-            <View style={styles.row}>
+            
+            {/* --- ALINHAMENTO APLICADO NA LINHA ABAIXO --- */}
+            <View style={{ ...styles.row, alignItems: 'flex-end' }}>
               <View style={{ ...styles.col, flex: 2 }}>
                 <Text style={styles.fieldLabel}>Banco</Text>
                 <Text style={styles.fieldValue}>{formData.banco}</Text>
