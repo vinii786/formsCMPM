@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica-Bold",
     marginBottom: 15,
   },
-  // --- ESTILO ADICIONADO PARA O TEXTO DA CARTA ---
   introText: {
     fontSize: 9,
     textAlign: "justify",
@@ -99,18 +98,16 @@ const SolicitacaoDiariaPdf = ({ formData }: { formData: FormData }) => {
 
         <Text style={styles.title}>SOLICITAÇÃO DE DIÁRIA/PASSAGEM</Text>
 
-        {/* --- TEXTO ADICIONADO CONFORME A IMAGEM --- */}
         <Text style={{...styles.bold, textAlign: 'center', fontSize: 10, marginBottom: 10}}>
           EXCELENTÍSSIMO SENHOR PRESIDENTE DA CÂMARA MUNICIPAL DE PATOS DE MINAS
         </Text>
         <Text style={styles.introText}>
-          Em atendimento ao disposto na Resolução nº 323, De 14 De Março De 2025, requeiro a Vossa Excelência autorização para desempenho de
+          Em atendimento ao disposto na Resolução nº 276/12, requeiro a Vossa Excelência autorização para desempenho de
           missão temporária, de caráter representativo ou cultural, a qual será custeada por diárias pagas pelo poder público.
         </Text>
         <Text style={styles.introText}>
           Para tanto, especifico o seguinte:
         </Text>
-        {/* ------------------------------------------- */}
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>SOLICITANTE</Text>
@@ -130,13 +127,14 @@ const SolicitacaoDiariaPdf = ({ formData }: { formData: FormData }) => {
               </View>
             </View>
             
-            {/* --- ALINHAMENTO APLICADO NA LINHA ABAIXO --- */}
+            {/* --- LAYOUT DOS CAMPOS BANCÁRIOS REFINADO --- */}
             <View style={{ ...styles.row, alignItems: 'flex-end' }}>
               <View style={{ ...styles.col, flex: 2 }}>
                 <Text style={styles.fieldLabel}>Banco</Text>
                 <Text style={styles.fieldValue}>{formData.banco}</Text>
               </View>
-              <View style={{ ...styles.col, flex: 1.25 }}>
+              {/* Tipo de Conta: reduzido */}
+              <View style={{ ...styles.col, flex: 1 }}>
                 <Text style={styles.fieldLabel}>Tipo de Conta</Text>
                 <View style={styles.checkboxContainer}>
                   <Text style={styles.checkboxText}>
@@ -147,15 +145,18 @@ const SolicitacaoDiariaPdf = ({ formData }: { formData: FormData }) => {
                   </Text>
                 </View>
               </View>
-              <View style={{ ...styles.col, flex: 0.75 }}>
+              {/* Agência: reduzido */}
+              <View style={{ ...styles.col, flex: 0.5 }}>
                 <Text style={styles.fieldLabel}>Agência</Text>
                 <Text style={styles.fieldValue}>{formData.agencia}</Text>
               </View>
-              <View style={{ ...styles.col, flex: 1 }}>
+              {/* Conta: reduzido */}
+              <View style={{ ...styles.col, flex: 0.7 }}>
                 <Text style={styles.fieldLabel}>Conta</Text>
                 <Text style={styles.fieldValue}>{formData.conta}</Text>
               </View>
-              <View style={{ ...styles.col, flex: 1, ...styles.lastCol }}>
+              {/* Pix: aumentado com o espaço economizado */}
+              <View style={{ ...styles.col, flex: 1.8, ...styles.lastCol }}>
                 <Text style={styles.fieldLabel}>Pix</Text>
                 <Text style={styles.fieldValue}>{formData.pix}</Text>
               </View>
