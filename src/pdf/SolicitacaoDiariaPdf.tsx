@@ -102,7 +102,7 @@ const SolicitacaoDiariaPdf = ({ formData }: { formData: FormData }) => {
           EXCELENTÍSSIMO SENHOR PRESIDENTE DA CÂMARA MUNICIPAL DE PATOS DE MINAS
         </Text>
         <Text style={styles.introText}>
-          Em atendimento ao disposto na Resolução nº 323, De 14 De Março De 2025, requeiro a Vossa Excelência autorização para desempenho de
+          Em atendimento ao disposto na Resolução nº 323, de 14 de Março de 2025, requeiro a Vossa Excelência autorização para desempenho de
           missão temporária, de caráter representativo ou cultural, a qual será custeada por diárias pagas pelo poder público.
         </Text>
         <Text style={styles.introText}>
