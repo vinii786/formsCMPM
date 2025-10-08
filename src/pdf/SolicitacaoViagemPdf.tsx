@@ -6,7 +6,7 @@ interface Participante {
   nome: string;
 }
 
-// Esta é a interface que precisamos usar
+// A interface com todos os campos necessários
 interface FormData {
   nome: string;
   matricula: string;
@@ -31,16 +31,17 @@ const styles = StyleSheet.create({
   header: { textAlign: "center", marginBottom: 15 },
   bold: { fontFamily: "Helvetica-Bold" },
   headerText: { fontSize: 9, color: "grey", lineHeight: 1.3 },
-  title: { fontSize: 12, fontFamily: "Helvetica-Bold", textAlign: "center", margin: "15px 0" },
   introText: { fontSize: 10, textAlign: "justify", lineHeight: 1.5, marginBottom: 10 },
   section: { borderWidth: 1, borderColor: "#000", marginBottom: 10 },
   sectionTitle: { padding: 4, backgroundColor: "#E0E0E0", fontFamily: "Helvetica-Bold", fontSize: 11, borderBottomWidth: 1, borderBottomColor: "#000" },
   content: { padding: 8 },
   contentFinalidade: { padding: 8, display: "flex", flexDirection: "row", gap: 10 },
-  row: { flexDirection: "row", marginBottom: 8, gap: 5 },
+  row: { flexDirection: "row", marginBottom: 0, gap: 5 }, // Removido marginBottom para mais controle
   col: { flex: 1, paddingRight: 10 },
-  fieldLabel: { fontSize: 8, fontFamily: "Helvetica-Bold", marginBottom: 2, color: '#555' },
+  fieldContainer: { borderWidth: 1, borderColor: '#ccc', padding: 4, flexGrow: 1, marginBottom: 5 },
+  fieldLabel: { fontSize: 7, fontFamily: "Helvetica-Bold", marginBottom: 2, color: '#555' },
   fieldValue: { fontSize: 9, borderBottomWidth: 1, borderBottomStyle: "dotted", borderBottomColor: "#000", paddingBottom: 2, minHeight: 12 },
+  fieldValueSolicitante: { fontSize: 9, minHeight: 12, paddingBottom: 2 },
   table: { display: "flex", flexDirection: "column", width: "100%", borderWidth: 1, borderColor: "#000", marginTop: 10 },
   tableHeader: { flexDirection: "row", backgroundColor: "#E0E0E0", borderBottomWidth: 1, borderBottomColor: "#000" },
   tableRow: { flexDirection: "row" },
@@ -50,15 +51,12 @@ const styles = StyleSheet.create({
   signatureSection: { marginTop: 25, alignItems: "center" },
   signatureLine: { borderBottomWidth: 1, borderBottomColor: "#000", width: "60%" },
   signatureText: { fontSize: 9, marginTop: 3 },
-  fieldContainer: { borderWidth: 1, borderColor: '#ccc', padding: 4, flexGrow: 1, marginBottom: 5 },
-  fieldValueSolicitante: { fontSize: 9, minHeight: 12, paddingBottom: 2 },
 });
 
 const SolicitacaoViagemPdf = ({
   formData,
   participantes,
 }: {
-  // AQUI ESTÁ A CORREÇÃO: Trocamos 'any' por 'FormData'
   formData: FormData; 
   participantes: Participante[];
 }) => {
@@ -78,38 +76,45 @@ const SolicitacaoViagemPdf = ({
           </Text>
         </View>
         
+        {/* SEÇÃO DO SOLICITANTE COM TAMANHOS AJUSTADOS */}
         <View style={styles.section}>
             <Text style={styles.sectionTitle}>SOLICITANTE</Text>
             <View style={styles.content}>
-                <View style={{...styles.row, marginBottom: 0}}>
+                <View style={styles.row}>
                     <View style={{...styles.fieldContainer, width: '100%'}}>
                         <Text style={styles.fieldLabel}>NOME</Text>
                         <Text style={styles.fieldValueSolicitante}>{formData.nome || ' '}</Text>
                     </View>
                 </View>
-                <View style={{...styles.row, marginBottom: 0}}>
+                <View style={styles.row}>
+                    {/* Matrícula reduzida para 15% (ideal para 4 números) */}
                     <View style={{...styles.fieldContainer, width: '15%'}}>
                         <Text style={styles.fieldLabel}>MATRÍCULA</Text>
                         <Text style={styles.fieldValueSolicitante}>{formData.matricula || ' '}</Text>
                     </View>
+                    {/* Cargo aumentado para 85% */}
                     <View style={{...styles.fieldContainer, width: '85%'}}>
                         <Text style={styles.fieldLabel}>CARGO</Text>
                         <Text style={styles.fieldValueSolicitante}>{formData.cargo || ' '}</Text>
                     </View>
                 </View>
-                <View style={{...styles.row, marginBottom: 0}}>
+                <View style={styles.row}>
+                    {/* Banco aumentado para 40% */}
                     <View style={{...styles.fieldContainer, width: '40%'}}>
                         <Text style={styles.fieldLabel}>BANCO</Text>
                         <Text style={styles.fieldValueSolicitante}>{formData.banco || ' '}</Text>
                     </View>
+                    {/* Agência com 15% (ideal para 7 números) */}
                     <View style={{...styles.fieldContainer, width: '15%'}}>
                         <Text style={styles.fieldLabel}>AGÊNCIA</Text>
                         <Text style={styles.fieldValueSolicitante}>{formData.agencia || ' '}</Text>
                     </View>
+                    {/* Conta com 20% (ideal para 10 números) */}
                     <View style={{...styles.fieldContainer, width: '20%'}}>
                         <Text style={styles.fieldLabel}>CONTA</Text>
                         <Text style={styles.fieldValueSolicitante}>{formData.conta || ' '}</Text>
                     </View>
+                    {/* PIX com o espaço restante */}
                     <View style={{...styles.fieldContainer, width: '25%'}}>
                         <Text style={styles.fieldLabel}>PIX</Text>
                         <Text style={styles.fieldValueSolicitante}>{formData.pix || ' '}</Text>
@@ -118,6 +123,7 @@ const SolicitacaoViagemPdf = ({
             </View>
         </View>
 
+        {/* TEXTO ESTILO CARTA REINSERIDO AQUI */}
         <Text
           style={{
             ...styles.introText,
@@ -135,6 +141,7 @@ const SolicitacaoViagemPdf = ({
         </Text>
         <Text style={styles.introText}>Para tanto, especifico o seguinte:</Text>
 
+        {/* RESTO DO SEU DOCUMENTO ORIGINAL */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>1. Finalidade:</Text>
           <View style={styles.contentFinalidade}>
@@ -165,7 +172,7 @@ const SolicitacaoViagemPdf = ({
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>3. Destino</Text>
           <View style={styles.content}>
-            <View style={styles.row}>
+            <View style={{...styles.row, marginBottom: 8}}>
               <View style={styles.col}>
                 <Text style={styles.fieldLabel}>a) Cidade e Estado:</Text>
                 <Text style={styles.fieldValue}>{formData.cidadeEstado}</Text>
@@ -189,6 +196,7 @@ const SolicitacaoViagemPdf = ({
           </Text>
         </View>
 
+        {/* ... e assim por diante com o resto do seu arquivo ... */}
         <View style={styles.table}>
           <View style={styles.tableHeader}>
             <View style={styles.tableColHeader}>
@@ -261,6 +269,7 @@ const SolicitacaoViagemPdf = ({
             Fica autorizada a percepção de diárias de viagem conforme requerido.
           </Text>
         </View>
+
       </Page>
     </Document>
   );
