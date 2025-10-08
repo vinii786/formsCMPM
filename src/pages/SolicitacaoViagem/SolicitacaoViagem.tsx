@@ -1,15 +1,20 @@
-// src/pages/SolicitacaoViagem/SolicitacaoViagem.tsx
-import React, { useState } from "react";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import SolicitacaoViagemPdf from "../../pdf/SolicitacaoViagemPdf";
-import "../FormularioFerias/FormularioFerias.css";
+// src/pdf/SolicitacaoViagemPdf.tsx
+import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 
+// A interface permanece a mesma da versão anterior, com os campos do solicitante
 interface Participante {
   id: number;
   nome: string;
 }
 
 interface FormData {
+  nome: string;
+  matricula: string;
+  cargo: string;
+  banco: string;
+  agencia: string;
+  conta: string;
+  pix: string;
   numVereadores: string;
   numServidores: string;
   finalidade: "encontro" | "curso" | "outros";
@@ -21,217 +26,244 @@ interface FormData {
   justificativa: string;
 }
 
-const SolicitacaoViagem = () => {
-  const [formData, setFormData] = useState<FormData>({
-    numVereadores: "",
-    numServidores: "",
-    finalidade: "encontro",
-    finalidadeOutros: "",
-    periodo: "",
-    cidadeEstado: "",
-    local: "",
-    meioTransporte: "",
-    justificativa: "",
-  });
+// Os estilos permanecem os mesmos
+const styles = StyleSheet.create({
+  page: { fontFamily: "Helvetica", fontSize: 10, padding: 40, color: "#333" },
+  header: { textAlign: "center", marginBottom: 15 },
+  bold: { fontFamily: "Helvetica-Bold" },
+  headerText: { fontSize: 9, color: "grey", lineHeight: 1.3 },
+  title: { fontSize: 12, fontFamily: "Helvetica-Bold", textAlign: "center", margin: "15px 0" },
+  introText: { fontSize: 10, textAlign: "justify", lineHeight: 1.5, marginBottom: 10 },
+  section: { borderWidth: 1, borderColor: "#000", marginBottom: 10 },
+  sectionTitle: { padding: 4, backgroundColor: "#E0E0E0", fontFamily: "Helvetica-Bold", fontSize: 11, borderBottomWidth: 1, borderBottomColor: "#000" },
+  content: { padding: 8 },
+  contentFinalidade: { padding: 8, display: "flex", flexDirection: "row", gap: 10 },
+  row: { flexDirection: "row", marginBottom: 0, gap: 5 },
+  col: { flex: 1, paddingRight: 10 },
+  fieldContainer: { borderWidth: 1, borderColor: '#ccc', padding: 4, flexGrow: 1, marginBottom: 5 },
+  fieldLabel: { fontSize: 7, fontFamily: "Helvetica-Bold", marginBottom: 2, color: '#555' },
+  fieldValue: { fontSize: 9, minHeight: 12, borderBottomWidth: 1, borderBottomStyle: "dotted", borderBottomColor: "#000", paddingBottom: 2 },
+  fieldValueSolicitante: { fontSize: 9, minHeight: 12, paddingBottom: 2 },
+  table: { display: "flex", flexDirection: "column", width: "100%", borderWidth: 1, borderColor: "#000", marginTop: 10 },
+  tableHeader: { flexDirection: "row", backgroundColor: "#E0E0E0", borderBottomWidth: 1, borderBottomColor: "#000" },
+  tableRow: { flexDirection: "row" },
+  tableColHeader: { flex: 1, borderRightWidth: 1, borderRightColor: "#000", padding: 4, fontFamily: "Helvetica-Bold", textAlign: "center", fontSize: 9 },
+  tableCol: { flex: 1, borderRightWidth: 1, borderRightColor: "#000", padding: 4, minHeight: 20 },
+  footerText: { fontSize: 8, marginTop: 5, fontStyle: "italic" },
+  signatureSection: { marginTop: 25, alignItems: "center" },
+  signatureLine: { borderBottomWidth: 1, borderBottomColor: "#000", width: "60%" },
+  signatureText: { fontSize: 9, marginTop: 3 },
+});
 
-  const [participantes, setParticipantes] = useState<Participante[]>([
-    { id: 1, nome: "" },
-  ]);
-
-  const [documentoPronto, setDocumentoPronto] =
-    useState<React.ReactElement | null>(null);
-
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    setDocumentoPronto(null);
-  };
-
-  const handleParticipanteChange = (
-    index: number,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const novosParticipantes = [...participantes];
-    novosParticipantes[index].nome = e.target.value;
-    setParticipantes(novosParticipantes);
-    setDocumentoPronto(null);
-  };
-
-  const adicionarParticipante = () => {
-    setParticipantes([...participantes, { id: Date.now(), nome: "" }]);
-  };
-
-  const removerParticipante = (index: number) => {
-    if (participantes.length <= 1) return;
-    setParticipantes(participantes.filter((_, i) => i !== index));
-    setDocumentoPronto(null);
-  };
-
-  const handleGerarPdfClick = () => {
-    const doc = (
-      <SolicitacaoViagemPdf formData={formData} participantes={participantes} />
-    );
-    setDocumentoPronto(doc);
-  };
+const SolicitacaoViagemPdf = ({
+  formData,
+  participantes,
+}: {
+  formData: FormData;
+  participantes: Participante[];
+}) => {
+  const currentDate = new Date();
 
   return (
-    <div className="form-container">
-      <div className="form-section">
-        <h3>Participantes</h3>
-        {participantes.map((p, index) => (
-          <div key={p.id} className="occurrence-header">
-            <input
-              type="text"
-              value={p.nome}
-              onChange={(e) => handleParticipanteChange(index, e)}
-              placeholder={`Nome do Participante`}
-              className="form-input-full"
-            />
-            {participantes.length > 1 && (
-              <button
-                onClick={() => removerParticipante(index)}
-                className="remove-btn"
-              >
-                Remover
-              </button>
-            )}
-          </div>
-        ))}
-        <button onClick={adicionarParticipante} className="add-btn">
-          + Adicionar Participante
-        </button>
-      </div>
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <View style={styles.header}>
+          <Text style={styles.bold}>CÂMARA MUNICIPAL DE PATOS DE MINAS</Text>
+          <Text style={styles.headerText}>
+            Rua José de Santana, 470, Centro CEP: 38700-052-Patos de Minas - MG
+          </Text>
+          <Text style={styles.headerText}>
+            Tel: (34) 3821-8455-camarapatos@camarapatos.mg.gov.br -
+            www.camarapatos.mg.gov.br
+          </Text>
+        </View>
 
-      <div className="form-section">
-        <h3>2. Finalidade</h3>
-        <div className="radio-group">
-          <label>
-            <input
-              type="radio"
-              name="finalidade"
-              value="encontro"
-              checked={formData.finalidade === "encontro"}
-              onChange={handleInputChange as any}
-            />{" "}
-            Encontro/Seminário/Congresso
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="finalidade"
-              value="curso"
-              checked={formData.finalidade === "curso"}
-              onChange={handleInputChange as any}
-            />{" "}
-            Curso de aperfeiçoamento
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="finalidade"
-              value="outros"
-              checked={formData.finalidade === "outros"}
-              onChange={handleInputChange as any}
-            />{" "}
-            Outros
-          </label>
-        </div>
-        {formData.finalidade === "outros" && (
-          <input
-            type="text"
-            name="finalidadeOutros"
-            placeholder="Especifique a finalidade"
-            value={formData.finalidadeOutros}
-            onChange={handleInputChange}
-            className="form-input-full conditional-input"
-          />
-        )}
-      </div>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>SOLICITANTE</Text>
+          <View style={styles.content}>
+            <View style={styles.row}>
+                <View style={{...styles.fieldContainer, width: '100%'}}>
+                    <Text style={styles.fieldLabel}>NOME</Text>
+                    <Text style={styles.fieldValueSolicitante}>{formData.nome || ' '}</Text>
+                </View>
+            </View>
+            <View style={styles.row}>
+                <View style={{...styles.fieldContainer, width: '15%'}}>
+                    <Text style={styles.fieldLabel}>MATRÍCULA</Text>
+                    <Text style={styles.fieldValueSolicitante}>{formData.matricula || ' '}</Text>
+                </View>
+                <View style={{...styles.fieldContainer, width: '85%'}}>
+                    <Text style={styles.fieldLabel}>CARGO</Text>
+                    <Text style={styles.fieldValueSolicitante}>{formData.cargo || ' '}</Text>
+                </View>
+            </View>
+            <View style={styles.row}>
+                <View style={{...styles.fieldContainer, width: '40%'}}>
+                    <Text style={styles.fieldLabel}>BANCO</Text>
+                    <Text style={styles.fieldValueSolicitante}>{formData.banco || ' '}</Text>
+                </View>
+                <View style={{...styles.fieldContainer, width: '15%'}}>
+                    <Text style={styles.fieldLabel}>AGÊNCIA</Text>
+                    <Text style={styles.fieldValueSolicitante}>{formData.agencia || ' '}</Text>
+                </View>
+                <View style={{...styles.fieldContainer, width: '20%'}}>
+                    <Text style={styles.fieldLabel}>CONTA</Text>
+                    <Text style={styles.fieldValueSolicitante}>{formData.conta || ' '}</Text>
+                </View>
+                <View style={{...styles.fieldContainer, width: '25%'}}>
+                    <Text style={styles.fieldLabel}>PIX</Text>
+                    <Text style={styles.fieldValueSolicitante}>{formData.pix || ' '}</Text>
+                </View>
+            </View>
+          </View>
+        </View>
 
-      <div className="form-section">
-        <h3>3. Período</h3>
-        <input
-          type="text"
-          name="periodo"
-          placeholder="Ex: 01/01/2025 a 05/01/2025"
-          value={formData.periodo}
-          onChange={handleInputChange}
-          className="form-input-full"
-        />
-      </div>
+        <Text
+          style={{
+            ...styles.introText,
+            textAlign: "center",
+            fontFamily: "Helvetica-Bold",
+          }}
+        >
+          EXCELENTÍSSIMO SENHOR PRESIDENTE DA CÂMARA MUNICIPAL DE PATOS DE MINAS
+        </Text>
+        <Text style={styles.introText}>
+          Em atendimento ao disposto na Resolução nº 323 de 14 de março de 2025, requeiro a Vossa
+          Excelência autorização para desempenho de missão temporária, de
+          caráter representativo ou cultural, a qual será custeada por diárias
+          pagas pelo poder público.
+        </Text>
+        <Text style={styles.introText}>Para tanto, especifico o seguinte:</Text>
 
-      <div className="form-section">
-        <h3>4. Destino</h3>
-        <div className="form-grid">
-          <input
-            type="text"
-            name="cidadeEstado"
-            placeholder="Cidade e Estado"
-            value={formData.cidadeEstado}
-            onChange={handleInputChange}
-          />
-          <input
-            type="text"
-            name="local"
-            placeholder="Local (Hotel, Centro de Convenções, etc.)"
-            value={formData.local}
-            onChange={handleInputChange}
-          />
-        </div>
-        <input
-          type="text"
-          name="meioTransporte"
-          placeholder="Meio de transporte"
-          value={formData.meioTransporte}
-          onChange={handleInputChange}
-          className="form-input-full"
-          style={{ marginTop: "1rem" }}
-        />
-      </div>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>1. Finalidade:</Text>
+          <View style={styles.contentFinalidade}>
+            <Text style={{ marginBottom: 5 }}>
+              [{formData.finalidade === "encontro" ? "X" : " "}]
+              Encontro/Seminário/Congresso
+            </Text>
+            <Text style={{ marginBottom: 5 }}>
+              [{formData.finalidade === "curso" ? "X" : " "}] Curso de
+              aperfeiçoamento
+            </Text>
+            <Text>
+              [{formData.finalidade === "outros" ? "X" : " "}] Outros:{" "}
+              <Text style={{ ...styles.fieldValue, flex: 1 }}>
+                {formData.finalidadeOutros}
+              </Text>
+            </Text>
+          </View>
+        </View>
 
-      <div className="form-section">
-        <h3>5. Justificativa</h3>
-        <textarea
-          name="justificativa"
-          value={formData.justificativa}
-          onChange={handleInputChange}
-          rows={5}
-        ></textarea>
-      </div>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>2. Período</Text>
+          <View style={styles.content}>
+            <Text style={styles.fieldValue}>{formData.periodo || " "}</Text>
+          </View>
+        </View>
 
-      <button
-        onClick={handleGerarPdfClick}
-        className="generate-pdf-button"
-        style={{
-          marginTop: "1rem",
-          display: "block",
-          textAlign: "center",
-          width: "100%",
-          border: "none",
-        }}
-      >
-        Gerar PDF
-      </button>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>3. Destino</Text>
+          <View style={styles.content}>
+            <View style={styles.row}>
+              <View style={styles.col}>
+                <Text style={styles.fieldLabel}>a) Cidade e Estado:</Text>
+                <Text style={styles.fieldValue}>{formData.cidadeEstado}</Text>
+              </View>
+              <View style={styles.col}>
+                <Text style={styles.fieldLabel}>b) Local:</Text>
+                <Text style={styles.fieldValue}>{formData.local}</Text>
+              </View>
+              <View style={styles.col}>
+                <Text style={styles.fieldLabel}>c) Meio de transporte:</Text>
+                <Text style={styles.fieldValue}>{formData.meioTransporte}</Text>
+              </View>
+            </View>
+          </View>
+        </View>
 
-      {documentoPronto && (
-        <div style={{ textAlign: "center", marginTop: "1rem" }}>
-          <PDFDownloadLink
-            document={documentoPronto as any}
-            fileName="solicitacao_viagem.pdf"
-            className="download-link"
-          >
-            {({ loading }) =>
-              loading
-                ? "A carregar documento..."
-                : "Download Pronto! Clique aqui para transferir."
-            }
-          </PDFDownloadLink>
-        </div>
-      )}
-    </div>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>4. Justificativa</Text>
+          <Text style={{ ...styles.content, minHeight: 40 }}>
+            {formData.justificativa || " "}
+          </Text>
+        </View>
+
+        <View style={styles.table}>
+          <View style={styles.tableHeader}>
+            <View style={styles.tableColHeader}>
+              <Text>Participante(s)</Text>
+            </View>
+            <View style={styles.tableColHeader}>
+              <Text>Assinatura(s) do Participante</Text>
+            </View>
+            <View style={{ ...styles.tableColHeader, borderRightWidth: 0 }}>
+              <Text>Assinatura(s) do Chefe Imediato*</Text>
+            </View>
+          </View>
+          {participantes.map((p, index) => (
+            <View
+              key={p.id}
+              style={{
+                ...styles.tableRow,
+                borderBottomWidth: index === participantes.length - 1 ? 0 : 1,
+              }}
+            >
+              <View style={styles.tableCol}>
+                <Text>{p.nome}</Text>
+              </View>
+              <View style={styles.tableCol}>
+                <Text> </Text>
+              </View>
+              <View style={{ ...styles.tableCol, borderRightWidth: 0 }}>
+                <Text> </Text>
+              </View>
+            </View>
+          ))}
+        </View>
+        <Text style={styles.footerText}>
+          *A assinatura do Chefe Imediato certifica que não haverá prejuízo dos
+          trabalhos no setor em que o servidor está lotado.
+        </Text>
+
+        <Text
+          style={{
+            ...styles.footerText,
+            textAlign: "right",
+            marginTop: 15,
+            marginBottom: 20,
+          }}
+        >
+          Patos de Minas,{" "}
+          {currentDate.toLocaleDateString("pt-BR", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+          })}
+          .
+        </Text>
+
+        <View style={styles.signatureSection}>
+          <View style={styles.signatureLine} />
+          <Text style={styles.signatureText}>Divisão de Contabilidade</Text>
+          <Text style={{ ...styles.footerText, textAlign: "center" }}>
+            Declaro haver dotação orçamentária e financeira suficiente para
+            fazer face ao requerimento.
+          </Text>
+        </View>
+
+        <View style={{ ...styles.signatureSection }}>
+          <View style={styles.signatureLine} />
+          <Text style={styles.signatureText}>
+            Presidente da Câmara Municipal
+          </Text>
+          <Text style={{ ...styles.footerText, textAlign: "center" }}>
+            Fica autorizada a percepção de diárias de viagem conforme requerido.
+          </Text>
+        </View>
+      </Page>
+    </Document>
   );
 };
 
-export default SolicitacaoViagem;
+export default SolicitacaoViagemPdf;
