@@ -1,7 +1,6 @@
 // src/pdf/SolicitacaoViagemPdf.tsx
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 
-// ... (interface FormData e Participante continuam as mesmas)
 interface Participante {
   id: number;
   nome: string;
@@ -30,10 +29,11 @@ const styles = StyleSheet.create({
   // Adicionado estilo para o texto de teste
   debugText: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: "Helvetica-Bold",
     color: 'red',
     textAlign: 'center',
     margin: 20,
+    marginBottom: 0,
   },
   page: { fontFamily: "Helvetica", fontSize: 10, padding: 40, color: "#333" },
   header: { textAlign: "center", marginBottom: 15 },
@@ -74,16 +74,47 @@ const SolicitacaoViagemPdf = ({
     <Document>
       <Page size="A4" style={styles.page}>
         
-        {/* TEXTO DE TESTE ADICIONADO AQUI */}
         <Text style={styles.debugText}>
           TESTE DE ATUALIZAÇÃO: {currentDate.toLocaleString('pt-BR')}
         </Text>
 
         <View style={styles.header}>
-            {/* ... o resto do seu header ... */}
+          <Text style={styles.bold}>CÂMARA MUNICIPAL DE PATOS DE MINAS</Text>
+          <Text style={styles.headerText}>
+            Rua José de Santana, 470, Centro CEP: 38700-052-Patos de Minas - MG
+          </Text>
+          <Text style={styles.headerText}>
+            Tel: (34) 3821-8455-camarapatos@camarapatos.mg.gov.br -
+            www.camarapatos.mg.gov.br
+          </Text>
         </View>
         
-        {/* ... o resto do seu código ... */}
+        {/* Adicionando o corpo do documento de volta para usar as variáveis */}
+        <View style={styles.section}>
+            <Text style={styles.sectionTitle}>SOLICITANTE</Text>
+            <View style={styles.content}>
+                <View style={{...styles.row, width: '100%'}}>
+                    <View style={{...styles.fieldContainer, width: '100%'}}>
+                        <Text style={styles.fieldLabel}>NOME</Text>
+                        <Text style={styles.fieldValueSolicitante}>{formData.nome || ' '}</Text>
+                    </View>
+                </View>
+            </View>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>1. Finalidade:</Text>
+          <View style={styles.contentFinalidade}>
+            <Text>
+              Finalidade: {formData.finalidade} {formData.finalidadeOutros}
+            </Text>
+          </View>
+        </View>
+        
+        <View style={styles.table}>
+            <View style={styles.tableHeader}><Text style={styles.tableColHeader}>Participantes</Text></View>
+            {participantes.map(p => <View key={p.id} style={styles.tableRow}><Text style={styles.tableCol}>{p.nome}</Text></View>)}
+        </View>
 
       </Page>
     </Document>
