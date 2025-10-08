@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
   content: { padding: 8 },
   row: { flexDirection: "row", marginBottom: 8 },
   col: { flex: 1, paddingRight: 10 },
+  lastCol: { paddingRight: 0 },
   fieldLabel: { fontSize: 8, fontFamily: "Helvetica-Bold", marginBottom: 2 },
   fieldValue: {
     fontSize: 10,
@@ -88,66 +89,69 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
           DE CURTA E MÉDIA DURAÇÃO - VERSÃO 2
         </Text>
 
-        {/* Seção I */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>I - IDENTIFICAÇÃO DO SERVIDOR</Text>
           <View style={styles.content}>
+            {/* Linha 1: Nome, Matrícula, Cargo */}
             <View style={styles.row}>
-              <View style={styles.col}>
+              <View style={{...styles.col, flex: 2.5}}>
                 <Text style={styles.fieldLabel}>Nome:</Text>
                 <Text style={styles.fieldValue}>{formData.nome}</Text>
               </View>
-              <View style={styles.col}>
+              <View style={{...styles.col, flex: 0.5}}>
                 <Text style={styles.fieldLabel}>Matrícula:</Text>
                 <Text style={styles.fieldValue}>{formData.matricula}</Text>
               </View>
-            </View>
-            <View style={styles.row}>
-              <View style={styles.col}>
-                <Text style={styles.fieldLabel}>Endereço:</Text>
-                <Text style={styles.fieldValue}>{formData.endereco}</Text>
-              </View>
-              <View style={styles.col}>
-                <Text style={styles.fieldLabel}>Lotação:</Text>
-                <Text style={styles.fieldValue}>{formData.lotacao}</Text>
-              </View>
-            </View>
-            <View style={styles.row}>
-              <View style={styles.col}>
-                <Text style={styles.fieldLabel}>Celular:</Text>
-                <Text style={styles.fieldValue}>{formData.celular}</Text>
-              </View>
-              <View style={styles.col}>
-                <Text style={styles.fieldLabel}>CPF:</Text>
-                <Text style={styles.fieldValue}>{formData.cpf}</Text>
-              </View>
-            </View>
-            <View style={styles.row}>
-              <View style={styles.col}>
-                <Text style={styles.fieldLabel}>Identidade:</Text>
-                <Text style={styles.fieldValue}>{formData.identidade}</Text>
-              </View>
-              <View style={styles.col}>
+              <View style={{...styles.col, flex: 1.5, ...styles.lastCol}}>
                 <Text style={styles.fieldLabel}>Cargo:</Text>
                 <Text style={styles.fieldValue}>{formData.cargo}</Text>
               </View>
             </View>
+            {/* Linha 2: Lotação, Endereço */}
             <View style={styles.row}>
               <View style={styles.col}>
+                <Text style={styles.fieldLabel}>Lotação:</Text>
+                <Text style={styles.fieldValue}>{formData.lotacao}</Text>
+              </View>
+              <View style={{...styles.col, ...styles.lastCol}}>
+                <Text style={styles.fieldLabel}>Endereço:</Text>
+                <Text style={styles.fieldValue}>{formData.endereco}</Text>
+              </View>
+            </View>
+            {/* Linha 3: CPF, Identidade, Celular */}
+            <View style={styles.row}>
+              <View style={styles.col}>
+                <Text style={styles.fieldLabel}>CPF:</Text>
+                <Text style={styles.fieldValue}>{formData.cpf}</Text>
+              </View>
+              <View style={styles.col}>
+                <Text style={styles.fieldLabel}>Identidade:</Text>
+                <Text style={styles.fieldValue}>{formData.identidade}</Text>
+              </View>
+              <View style={{...styles.col, ...styles.lastCol}}>
+                <Text style={styles.fieldLabel}>Celular:</Text>
+                <Text style={styles.fieldValue}>{formData.celular}</Text>
+              </View>
+            </View>
+            {/* Linha 4: Email, Ramal, Função de Confiança */}
+            <View style={{...styles.row, alignItems: 'flex-end'}}>
+              <View style={{...styles.col, flex: 2}}>
                 <Text style={styles.fieldLabel}>Email:</Text>
                 <Text style={styles.fieldValue}>{formData.emailServidor}</Text>
               </View>
-              <View style={styles.col}>
+              <View style={{...styles.col, flex: 0.75}}>
                 <Text style={styles.fieldLabel}>Ramal:</Text>
                 <Text style={styles.fieldValue}>{formData.ramal}</Text>
               </View>
+              <View style={{...styles.col, flex: 1.25, ...styles.lastCol}}>
+                 <Text style={{fontSize: 9}}>
+                   Função de Confiança:{" "}
+                   {formData.funcaoConfianca === "sim" ? "[X] Sim" : "[ ] Sim"}
+                   {"   "}
+                   {formData.funcaoConfianca === "nao" ? "[X] Não" : "[ ] Não"}
+                 </Text>
+              </View>
             </View>
-            <Text>
-              Função de Confiança:{" "}
-              {formData.funcaoConfianca === "sim" ? "[X] Sim" : "[ ] Sim"}
-              {"   "}
-              {formData.funcaoConfianca === "nao" ? "[X] Não" : "[ ] Não"}
-            </Text>
             {formData.funcaoConfianca === "sim" && (
               <Text style={{ fontSize: 9, marginTop: 4 }}>
                 Tipo:{" "}
@@ -164,7 +168,6 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
           </View>
         </View>
 
-        {/* Seção II */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>II - IDENTIFICAÇÃO DO CURSO</Text>
           <View style={styles.content}>
@@ -240,7 +243,6 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
           </View>
         </View>
 
-        {/* Seção III */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>
             III - APOIO FINANCEIRO SOLICITADO
