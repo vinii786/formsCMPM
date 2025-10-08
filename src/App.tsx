@@ -12,6 +12,7 @@ import DeclaracaoDependentes from "./pages/DeclaracaoDependentes/DeclaracaoDepen
 import DeclaracaoNaoOcupacao from "./pages/DeclaracaoNaoOcupacao/DeclaracaoNaoOcupacao";
 import DeclaracaoNepotismo from "./pages/DeclaracaoNepotismo/DeclaracaoNepotismo";
 import DeclaracaoFichaLimpa from "./pages/DeclaracaoFichaLimpa/DeclaracaoFichaLimpa";
+import SolicitacaoDiaria from "./pages/SolicitacaoDiaria/SolicitacaoDiaria";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
       <main className="app-main-content">
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/SolicitacaoDiaria" element={<SolicitacaoDiaria />} />
           <Route path="/formulario-ferias" element={<FormularioFerias />} />
           <Route path="/ocorrencia-ponto" element={<OcorrenciaPonto />} />
           <Route

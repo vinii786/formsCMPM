@@ -56,6 +56,7 @@ const HomePage = () => {
           linkTo="/ocorrencia-ponto"
           icon={<FaClock />}
         />
+        
         <FormCard
           title="Relatório de Viagem"
           description="Formulário para prestação de contas de viagens."
@@ -75,6 +76,12 @@ const HomePage = () => {
           icon={<FaBook />}
         />
         <FormCard
+          title="SOLICITAÇÃO DE DIÁRIA/PASSAGEM"
+          description="Solicite diarias e passagens."
+          linkTo="/SolicitacaoDiaria"
+          icon={<FaSuitcaseRolling/>}
+        />
+        <FormCard
           title="Solicitação de Documentos"
           description="Requerimento de cópia de documentos da pasta funcional."
           linkTo="/solicitacao-documentos"
@@ -86,12 +93,13 @@ const HomePage = () => {
           linkTo="/solicitacao-estagiario"
           icon={<FaUserGraduate />}
         />
-        <FormCard
-          title="Solicitação de Viagem"
-          description="Formulário para solicitar autorização para viagens."
-          linkTo="/solicitacao-viagem"
-          icon={<FaSuitcaseRolling />}
-        />
+        
+        {/* <FormCard */}
+          {/* title="Solicitação de Viagem" */}
+          {/* description="Formulário para solicitar autorização para viagens." */}
+          {/* linkTo="/solicitacao-viagem" */}
+          {/* icon={<FaSuitcaseRolling />} */}
+        {/* /> */}
       </div>
     </div>
   );
