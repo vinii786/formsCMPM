@@ -25,6 +25,9 @@ interface FormData {
 
 const styles = StyleSheet.create({
   page: { fontFamily: "Helvetica", fontSize: 9, padding: 40 },
+  header: { textAlign: "center", marginBottom: 15 },
+  bold: { fontFamily: "Helvetica-Bold" },
+  headerText: { fontSize: 9, color: "grey", lineHeight: 1.3 },
   title: {
     fontSize: 12,
     textAlign: "center",
@@ -49,6 +52,14 @@ const styles = StyleSheet.create({
     paddingBottom: 1,
     minHeight: 11,
   },
+  checkboxContainer: {
+    borderBottom: "1px dotted #000",
+    paddingBottom: 1,
+    minHeight: 22,
+  },
+  checkboxText: {
+    fontSize: 9,
+  },
   declarationText: {
     fontSize: 8,
     textAlign: "justify",
@@ -68,13 +79,23 @@ const SolicitacaoDiariaPdf = ({ formData }: { formData: FormData }) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
+        <View style={styles.header}>
+          <Text style={styles.bold}>CÂMARA MUNICIPAL DE PATOS DE MINAS</Text>
+          <Text style={styles.headerText}>
+            Rua José de Santana, 470, Centro CEP: 38700-052-Patos de Minas - MG
+          </Text>
+          <Text style={styles.headerText}>
+            Tel: (34) 3821-8455-camarapatos@camarapatos.mg.gov.br -
+            www.camarapatos.mg.gov.br
+          </Text>
+        </View>
+
         <Text style={styles.title}>SOLICITAÇÃO DE DIÁRIA/PASSAGEM</Text>
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>SOLICITANTE</Text>
           <View style={styles.content}>
             <View style={styles.row}>
-              {/* ALTERAÇÃO AQUI: Nome (reduzido), Matrícula (reduzido) e Cargo (aumentado) */}
               <View style={{ ...styles.col, flex: 1.5 }}>
                 <Text style={styles.fieldLabel}>NOME</Text>
                 <Text style={styles.fieldValue}>{formData.nome}</Text>
@@ -89,18 +110,20 @@ const SolicitacaoDiariaPdf = ({ formData }: { formData: FormData }) => {
               </View>
             </View>
             <View style={styles.row}>
-              {/* ALTERAÇÃO AQUI: Banco (aumentado), Agência (reduzido) e Conta (reduzido) */}
               <View style={{ ...styles.col, flex: 2 }}>
                 <Text style={styles.fieldLabel}>Banco</Text>
                 <Text style={styles.fieldValue}>{formData.banco}</Text>
               </View>
               <View style={{ ...styles.col, flex: 1.25 }}>
                 <Text style={styles.fieldLabel}>Tipo de Conta</Text>
-                <Text style={styles.fieldValue}>
-                  {formData.tipoConta === "corrente" ? "(X) Corrente" : "( ) Corrente"}
-                  {"   "}
-                  {formData.tipoConta === "poupanca" ? "(X) Poupança" : "( ) Poupança"}
-                </Text>
+                <View style={styles.checkboxContainer}>
+                  <Text style={styles.checkboxText}>
+                    {formData.tipoConta === "corrente" ? "(X) Corrente" : "( ) Corrente"}
+                  </Text>
+                  <Text style={styles.checkboxText}>
+                    {formData.tipoConta === "poupanca" ? "(X) Poupança" : "( ) Poupança"}
+                  </Text>
+                </View>
               </View>
               <View style={{ ...styles.col, flex: 0.75 }}>
                 <Text style={styles.fieldLabel}>Agência</Text>
@@ -118,7 +141,6 @@ const SolicitacaoDiariaPdf = ({ formData }: { formData: FormData }) => {
           </View>
         </View>
 
-        {/* O restante do documento permanece inalterado */}
         <View style={{ ...styles.row, marginBottom: 0 }}>
           <View style={{ ...styles.section, flex: 2, marginRight: 5 }}>
             <Text style={styles.sectionTitle}>DESTINO</Text>
