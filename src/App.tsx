@@ -29,38 +29,22 @@ function App() {
 
       <main className="app-main-content">
         <Routes>
+          
           <Route path="/" element={<HomePage />} />
-          <Route path="/SolicitacaoDiaria" element={<SolicitacaoDiaria />} />
-          <Route path="/formulario-ferias" element={<FormularioFerias />} />
-          <Route path="/ocorrencia-ponto" element={<OcorrenciaPonto />} />
-          <Route
-            path="/solicitacao-estagiario"
-            element={<SolicitacaoEstagiario />}
-          />
-          <Route path="/solicitacao-cursos" element={<SolicitacaoCursos />} />
-          <Route path="/solicitacao-viagem" element={<SolicitacaoViagem />} />
           <Route path="/adiantamento-13" element={<Adiantamento13 />} />
+          <Route path="/declaracao-dependentes" element={<DeclaracaoDependentes />} />
+          <Route path="/declaracao-ficha-limpa"element={<DeclaracaoFichaLimpa />}/>
+          <Route path="/declaracao-nepotismo" element={<DeclaracaoNepotismo />} />
+          <Route path="/declaracao-nao-ocupacao" element={<DeclaracaoNaoOcupacao />}/>
+          <Route path="/ocorrencia-ponto" element={<OcorrenciaPonto />} />
           <Route path="/relatorio-viagem" element={<RelatorioViagem />} />
-          <Route
-            path="/solicitacao-documentos"
-            element={<SolicitacaoDocumentos />}
-          />
-          <Route
-            path="/declaracao-dependentes"
-            element={<DeclaracaoDependentes />}
-          />
-          <Route
-            path="/declaracao-nao-ocupacao"
-            element={<DeclaracaoNaoOcupacao />}
-          />
-          <Route
-            path="/declaracao-nepotismo"
-            element={<DeclaracaoNepotismo />}
-          />
-          <Route
-            path="/declaracao-ficha-limpa"
-            element={<DeclaracaoFichaLimpa />}
-          />
+          <Route path="/formulario-ferias" element={<FormularioFerias />} />
+          <Route path="/solicitacao-cursos" element={<SolicitacaoCursos />} />
+          <Route path="/SolicitacaoDiaria" element={<SolicitacaoDiaria />} />
+          {/* <Route path="/solicitacao-viagem" element={<SolicitacaoViagem />} /> */}
+          <Route path="/solicitacao-documentos"element={<SolicitacaoDocumentos />}/>
+          <Route path="/solicitacao-estagiario"element={<SolicitacaoEstagiario />}/>
+        
         </Routes>
       </main>
     </div>
