@@ -96,7 +96,7 @@ const SolicitacaoDiariaPdf = ({ formData }: { formData: FormData }) => {
           </Text>
         </View>
 
-        <Text style={styles.title}>SOLICITAÇÃO DE DIÁRIA/PASSAGEM</Text>
+        <Text style={styles.title}>Solicitação de Diária/Passagem</Text>
 
         <Text style={{...styles.bold, textAlign: 'center', fontSize: 10, marginBottom: 10}}>
           EXCELENTÍSSIMO SENHOR PRESIDENTE DA CÂMARA MUNICIPAL DE PATOS DE MINAS
