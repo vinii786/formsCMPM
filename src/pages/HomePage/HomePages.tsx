@@ -40,7 +40,7 @@ const HomePage = () => {
         />
         <FormCard
           title="Declaração de Nepotismo"
-          description="Declaração sobre inexistência de nepotismo (LC 274 e Súmula 13 STF)."
+          description="Declaração sobre inexistência de Nepotismo (LC 274 e Súmula 13 STF)."
           linkTo="/declaracao-nepotismo"
           icon={<FaUserSlash />}
         />
@@ -76,8 +76,8 @@ const HomePage = () => {
           icon={<FaBook />}
         />
         <FormCard
-          title="SOLICITAÇÃO DE DIÁRIA/PASSAGEM"
-          description="Solicite diarias e passagens."
+          title="Solicitação de Diária/Passagem"
+          description="Solicite diárias e passagens."
           linkTo="/SolicitacaoDiaria"
           icon={<FaSuitcaseRolling/>}
         />
