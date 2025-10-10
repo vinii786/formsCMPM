@@ -29,7 +29,7 @@ function App() {
 
       <main className="app-main-content">
         <Routes>
-          
+
           <Route path="/" element={<HomePage />} />
           <Route path="/adiantamento-13" element={<Adiantamento13 />} />
           <Route path="/declaracao-dependentes" element={<DeclaracaoDependentes />} />
@@ -41,7 +41,8 @@ function App() {
           <Route path="/formulario-ferias" element={<FormularioFerias />} />
           <Route path="/solicitacao-cursos" element={<SolicitacaoCursos />} />
           <Route path="/SolicitacaoDiaria" element={<SolicitacaoDiaria />} />
-          {/* <Route path="/solicitacao-viagem" element={<SolicitacaoViagem />} /> */}
+          <Route path="/solicitacao-viagem" element={<SolicitacaoViagem />} /> 
+          {/* NAO ESTA EM USO  */}
           <Route path="/solicitacao-documentos"element={<SolicitacaoDocumentos />}/>
           <Route path="/solicitacao-estagiario"element={<SolicitacaoEstagiario />}/>
         
