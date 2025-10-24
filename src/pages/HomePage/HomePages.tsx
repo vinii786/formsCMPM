@@ -14,6 +14,8 @@ import {
   FaUsers,
   FaBuilding,
   FaUserSlash,
+  FaHandHoldingMedical,
+  
 } from "react-icons/fa";
 
 const HomePage = () => {
@@ -92,6 +94,13 @@ const HomePage = () => {
           description="Formulário para solicitar a contratação de estagiários."
           linkTo="/solicitacao-estagiario"
           icon={<FaUserGraduate />}
+        />
+
+        <FormCard
+          title="Solicitação de Inspeção Médica"
+          description="Formulário para solicitar inspeção médica."
+          linkTo="/inspecao-medica"
+          icon={<FaHandHoldingMedical />}
         />
         
         {/* <FormCard */}

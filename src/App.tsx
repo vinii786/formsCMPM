@@ -13,6 +13,7 @@ import DeclaracaoNaoOcupacao from "./pages/DeclaracaoNaoOcupacao/DeclaracaoNaoOc
 import DeclaracaoNepotismo from "./pages/DeclaracaoNepotismo/DeclaracaoNepotismo";
 import DeclaracaoFichaLimpa from "./pages/DeclaracaoFichaLimpa/DeclaracaoFichaLimpa";
 import SolicitacaoDiaria from "./pages/SolicitacaoDiaria/SolicitacaoDiaria";
+import RelatorioInspecaoMedica from "./pages/GESAT-RelatorioInspecaoMedica/RelatorioInspecaoMedica"
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           {/* NAO ESTA EM USO  */}
           <Route path="/solicitacao-documentos"element={<SolicitacaoDocumentos />}/>
           <Route path="/solicitacao-estagiario"element={<SolicitacaoEstagiario />}/>
+          <Route path="/inspecao-medica"element={<RelatorioInspecaoMedica />}/>
         
         </Routes>
       </main>

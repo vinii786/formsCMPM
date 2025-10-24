@@ -1,12 +1,12 @@
 /* src/pages/HomePage/HomePage.css */
 .homepage-container {
-  max-width: 1200px;
+  max-width: 1250px;
   margin: 0 auto;
 }
 
 .card-container {
   /* A MUDANÇA ESTÁ AQUI */
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* Cria 4 colunas de tamanho igual */
+  grid-template-columns: repeat(5, 1fr); /* Cria 4 colunas de tamanho igual */
   gap: 24px;
 }

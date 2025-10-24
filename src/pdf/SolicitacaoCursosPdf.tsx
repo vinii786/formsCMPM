@@ -61,6 +61,13 @@ const styles = StyleSheet.create({
     paddingRight: 2,
     minHeight: 12,
   },
+  fieldValueEmail: {
+    fontSize: 10,
+    borderBottom: "1px dotted #000",
+    paddingBottom: 2,
+    paddingRight: 2,
+    minHeight: 6,
+  },
   parecerBox: {
     border: "1px solid #000",
     height: 150,
@@ -75,6 +82,21 @@ const styles = StyleSheet.create({
   },
   signatureLine: { borderBottom: "1px solid #000", width: 180 },
   signatureText: { fontSize: 9, marginTop: 3, textAlign: "center" },
+  outroLine: {
+    flex: 1, // Faz a linha se esticar até o final
+    borderBottom: '1px solid #000',
+    marginLeft: 3,
+    height: 10, // Define uma altura para a linha ser visível
+  },
+  finalSectionRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 5, gap: 5 },
+
+  optionsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1, // Garante que o container ocupe o espaço restante
+    marginLeft: 5,
+    gap: 10, // Espaço entre "IPREM", "INSS", "Outro:"
+  },
 });
 
 const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
@@ -93,15 +115,15 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
           <Text style={styles.sectionTitle}>I - IDENTIFICAÇÃO DO SERVIDOR</Text>
           <View style={styles.content}>
             <View style={styles.row}>
-              <View style={{...styles.col, flex: 2.5}}>
+              <View style={{ ...styles.col, flex: 2.5 }}>
                 <Text style={styles.fieldLabel}>Nome:</Text>
                 <Text style={styles.fieldValue}>{formData.nome}</Text>
               </View>
-              <View style={{...styles.col, flex: 0.5}}>
+              <View style={{ ...styles.col, flex: 0.5 }}>
                 <Text style={styles.fieldLabel}>Matrícula:</Text>
                 <Text style={styles.fieldValue}>{formData.matricula}</Text>
               </View>
-              <View style={{...styles.col, flex: 1.5, ...styles.lastCol}}>
+              <View style={{ ...styles.col, flex: 1.5, ...styles.lastCol }}>
                 <Text style={styles.fieldLabel}>Cargo:</Text>
                 <Text style={styles.fieldValue}>{formData.cargo}</Text>
               </View>
@@ -111,7 +133,7 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
                 <Text style={styles.fieldLabel}>Lotação:</Text>
                 <Text style={styles.fieldValue}>{formData.lotacao}</Text>
               </View>
-              <View style={{...styles.col, ...styles.lastCol}}>
+              <View style={{ ...styles.col, ...styles.lastCol }}>
                 <Text style={styles.fieldLabel}>Endereço:</Text>
                 <Text style={styles.fieldValue}>{formData.endereco}</Text>
               </View>
@@ -129,26 +151,33 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
                 <Text style={styles.fieldLabel}>Celular:</Text>
                 <Text style={styles.fieldValue}>{formData.celular}</Text>
               </View>
-              <View style={{...styles.col, flex: 0.75, ...styles.lastCol}}>
+              <View style={{ ...styles.col, flex: 0.75, ...styles.lastCol }}>
                 <Text style={styles.fieldLabel}>Ramal:</Text>
                 <Text style={styles.fieldValue}>{formData.ramal}</Text>
               </View>
             </View>
-            <View style={{...styles.row, alignItems: 'flex-end'}}>
-              <View style={{...styles.col, flex: 2}}>
+
+            <View style={{ ...styles.row, alignItems: 'flex-end' }}>
+              <View style={{ ...styles.col, flex: 2 }}>
                 <Text style={styles.fieldLabel}>Email:</Text>
-                <Text style={styles.fieldValue}>{formData.emailServidor}</Text>
+                <Text style={styles.fieldValueEmail}>{formData.emailServidor}</Text>
               </View>
-              <View style={{...styles.col, flex: 1.5, ...styles.lastCol}}>
-                 <Text style={{fontSize: 9}}>
-                   Função de Confiança:{" "}
-                   {formData.funcaoConfianca === "sim" ? "[X] Sim" : "[ ] Sim"}
-                   {"   "}
-                   {formData.funcaoConfianca === "nao" ? "[X] Não" : "[ ] Não"}
-                 </Text>
-              </View>
+
             </View>
-            {formData.funcaoConfianca === "sim" && (
+            <View style={styles.section}>
+              <Text> </Text>
+              <ul>
+                <Text>Função de Confiança ( ) Sim  ( ) Não</Text>
+              </ul>
+              <ul>
+                <Text>Cargo de Direção ( ) Sim  ( ) Não</Text>
+              </ul>
+              <Text>Função Gratificada ( ) Sim  ( ) Não Qual? ________________________________________________________</Text>
+              <Text> </Text>
+
+            </View>
+
+            {/* {formData.funcaoConfianca === "sim" && (
               <Text style={{ fontSize: 9, marginTop: 4 }}>
                 Tipo:{" "}
                 {formData.tipoFuncao === "direcao"
@@ -160,7 +189,7 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
                   : "[ ] Função Gratificada"}{" "}
                 | Qual? {formData.qualFuncao}
               </Text>
-            )}
+            )} */}
           </View>
         </View>
 
@@ -232,9 +261,10 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
             <Text>
               Utilização da capacitação para fins de progressão na carreira
               profissional?{" "}
-              {formData.usoProgressao === "sim" ? "[X] sim" : "[ ] sim"}
+              {/* {formData.usoProgressao === "sim" ? "[X] sim" : "[ ] sim"}
               {"   "}
-              {formData.usoProgressao === "nao" ? "[X] não" : "[ ] não"}
+              {formData.usoProgressao === "nao" ? "[X] não" : "[ ] não"} */}
+              <Text>( ) Sim  ( ) Não</Text>
             </Text>
           </View>
         </View>
@@ -243,38 +273,40 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
           <Text style={styles.sectionTitle}>
             III - APOIO FINANCEIRO SOLICITADO
           </Text>
-          <View style={{...styles.content, ...styles.row, alignItems: 'center'}}>
-              <View style={{...styles.col, flex: 1.2, justifyContent: 'space-between'}}>
-                 <Text style={{fontSize: 9, marginBottom: 12}}>
-                    Inscrição:{" "}
-                    {formData.solicitaInscricao === "sim" ? "[X] Sim" : "[ ] Sim"}
-                    {"   "}
-                    {formData.solicitaInscricao === "nao" ? "[X] Não" : "[ ] Não"}
-                  </Text>
-                  <Text style={{fontSize: 9}}>
-                    Mensalidade:{" "}
-                    {formData.solicitaMensalidade === "sim"
-                      ? "[X] Sim"
-                      : "[ ] Sim"}
-                    {"   "}
-                    {formData.solicitaMensalidade === "nao"
-                      ? "[X] Não"
-                      : "[ ] Não"}
-                  </Text>
-              </View>
-              <View style={{...styles.col, flex: 1, justifyContent: 'space-between'}}>
-                  <Text style={{...styles.fieldValue, marginBottom: 12}}>
-                    Valor: R$ {formData.valorInscricao}
-                  </Text>
-                  <Text style={styles.fieldValue}>
-                    Valor por mês: R$ {formData.valorMensalidade}
-                  </Text>
-              </View>
-              <View style={{...styles.col, flex: 1.5, ...styles.lastCol}}>
-                  <Text style={styles.fieldValue}>
-                    Valor Total do Curso: R$ {formData.valorTotal}
-                  </Text>
-              </View>
+          <View style={{ ...styles.content, ...styles.row, alignItems: 'center' }}>
+            <View style={{ ...styles.col, flex: 1.2, justifyContent: 'space-between' }}>
+              <Text style={{ fontSize: 9, marginBottom: 12 }}>
+                Inscrição:{" "}
+                {/* {formData.solicitaInscricao === "sim" ? "[X] Sim" : "[ ] Sim"}
+                {"   "}
+                {formData.solicitaInscricao === "nao" ? "[X] Não" : "[ ] Não"} */}
+                <Text>( ) Sim  ( ) Não</Text>
+              </Text>
+              <Text style={{ fontSize: 9 }}>
+                Mensalidade:{" "}
+                {/* {formData.solicitaMensalidade === "sim"
+                  ? "[X] Sim"
+                  : "[ ] Sim"}
+                {"   "}
+                {formData.solicitaMensalidade === "nao"
+                  ? "[X] Não"
+                  : "[ ] Não"} */}
+                <Text>( ) Sim  ( ) Não</Text>
+              </Text>
+            </View>
+            <View style={{ ...styles.col, flex: 1, justifyContent: 'space-between' }}>
+              <Text style={{ ...styles.fieldValue, marginBottom: 12 }}>
+                Valor: R$ {formData.valorInscricao}
+              </Text>
+              <Text style={styles.fieldValue}>
+                Valor por mês: R$ {formData.valorMensalidade}
+              </Text>
+            </View>
+            <View style={{ ...styles.col, flex: 1.5, ...styles.lastCol }}>
+              <Text style={styles.fieldValue}>
+                Valor Total do Curso: R$ {formData.valorTotal}
+              </Text>
+            </View>
           </View>
         </View>
 
