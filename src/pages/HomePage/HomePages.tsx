@@ -14,7 +14,8 @@ import {
   FaUsers,
   FaBuilding,
   FaUserSlash,
-  FaHandHoldingMedical,
+  // FaHandHoldingMedical,
+  FaBriefcaseMedical,
   
 } from "react-icons/fa";
 
@@ -100,7 +101,7 @@ const HomePage = () => {
           title="Solicitação de Inspeção Médica"
           description="Formulário para solicitar inspeção médica."
           linkTo="/inspecao-medica"
-          icon={<FaHandHoldingMedical />}
+          icon={<FaBriefcaseMedical />}
         />
         
         {/* <FormCard */}
