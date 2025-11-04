@@ -14,7 +14,6 @@ import {
   FaUsers,
   FaBuilding,
   FaUserSlash,
-  // FaHandHoldingMedical,
   FaBriefcaseMedical,
   
 } from "react-icons/fa";

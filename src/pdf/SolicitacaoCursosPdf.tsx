@@ -164,7 +164,7 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
               </View>
 
             </View>
-            <View style={styles.section}>
+            {/* <View style={styles.section}>
               <Text> </Text>
               <ul>
                 <Text>Função de Confiança ( ) Sim  ( ) Não</Text>
@@ -175,9 +175,9 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
               <Text>Função Gratificada ( ) Sim  ( ) Não Qual? ________________________________________________________</Text>
               <Text> </Text>
 
-            </View>
+            </View> */}
 
-            {/* {formData.funcaoConfianca === "sim" && (
+            {formData.funcaoConfianca === "sim" && (
               <Text style={{ fontSize: 9, marginTop: 4 }}>
                 Tipo:{" "}
                 {formData.tipoFuncao === "direcao"
@@ -189,7 +189,7 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
                   : "[ ] Função Gratificada"}{" "}
                 | Qual? {formData.qualFuncao}
               </Text>
-            )} */}
+            )} 
           </View>
         </View>
 
@@ -261,10 +261,10 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
             <Text>
               Utilização da capacitação para fins de progressão na carreira
               profissional?{" "}
-              {/* {formData.usoProgressao === "sim" ? "[X] sim" : "[ ] sim"}
+              {formData.usoProgressao === "sim" ? "[X] sim" : "[ ] sim"}
               {"   "}
-              {formData.usoProgressao === "nao" ? "[X] não" : "[ ] não"} */}
-              <Text>( ) Sim  ( ) Não</Text>
+              {formData.usoProgressao === "nao" ? "[X] não" : "[ ] não"}
+              {/* <Text>( ) Sim  ( ) Não</Text> */}
             </Text>
           </View>
         </View>
@@ -277,21 +277,21 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
             <View style={{ ...styles.col, flex: 1.2, justifyContent: 'space-between' }}>
               <Text style={{ fontSize: 9, marginBottom: 12 }}>
                 Inscrição:{" "}
-                {/* {formData.solicitaInscricao === "sim" ? "[X] Sim" : "[ ] Sim"}
+                {formData.solicitaInscricao === "sim" ? "[X] Sim" : "[ ] Sim"}
                 {"   "}
-                {formData.solicitaInscricao === "nao" ? "[X] Não" : "[ ] Não"} */}
-                <Text>( ) Sim  ( ) Não</Text>
+                {formData.solicitaInscricao === "nao" ? "[X] Não" : "[ ] Não"}
+                {/* <Text>( ) Sim  ( ) Não</Text> */}
               </Text>
               <Text style={{ fontSize: 9 }}>
                 Mensalidade:{" "}
-                {/* {formData.solicitaMensalidade === "sim"
+                {formData.solicitaMensalidade === "sim"
                   ? "[X] Sim"
                   : "[ ] Sim"}
                 {"   "}
                 {formData.solicitaMensalidade === "nao"
                   ? "[X] Não"
-                  : "[ ] Não"} */}
-                <Text>( ) Sim  ( ) Não</Text>
+                  : "[ ] Não"}
+                {/* <Text>( ) Sim  ( ) Não</Text> */}
               </Text>
             </View>
             <View style={{ ...styles.col, flex: 1, justifyContent: 'space-between' }}>
