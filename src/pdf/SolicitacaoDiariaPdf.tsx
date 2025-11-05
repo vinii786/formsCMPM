@@ -234,6 +234,7 @@ const SolicitacaoDiariaPdf = ({ formData }: { formData: FormData }) => {
               pagamento.
             </Text>
             <View style={styles.signatureLine} />
+            <Text>Data: ___/___/_____ </Text>
             <Text style={styles.signatureText}>Assinatura do Solicitante</Text>
           </View>
         </View>
@@ -248,6 +249,7 @@ const SolicitacaoDiariaPdf = ({ formData }: { formData: FormData }) => {
               setor em que o servidor solicitante está lotado.
             </Text>
             <View style={styles.signatureLine} />
+            <Text>Data: ___/___/_____ </Text>
             <Text style={styles.signatureText}>
               Assinatura do Superior Imediato
             </Text>
@@ -255,7 +257,7 @@ const SolicitacaoDiariaPdf = ({ formData }: { formData: FormData }) => {
         </View>
       </Page>
       <Page size="A4" style={styles.page}>
-        <View style={{ ...styles.section, height: "30%" }}>
+        <View style={{ ...styles.section, height: "15%" }}>
           <Text style={styles.sectionTitle}>
             DECLARAÇÃO DE DISPONIBILIDADE ORÇAMENTÁRIA E FINANCEIRA
           </Text>
@@ -265,29 +267,31 @@ const SolicitacaoDiariaPdf = ({ formData }: { formData: FormData }) => {
               fazer faze ao requerimento.
             </Text>
             <View style={styles.signatureLine} />
+            <Text>Data: ___/___/_____ </Text>
             <Text style={styles.signatureText}>
               Assinatura da Divisão de Contabilidade
             </Text>
           </View>
         </View>
-        <View style={{ ...styles.section, height: "40%" }}>
+        <View style={{ ...styles.section, height: "20%" }}>
           <Text style={styles.sectionTitle}>DESPACHO DO PRESIDENTE</Text>
           <View style={{ ...styles.content, paddingTop: 20 }}>
             <Text>
-              () Autorizo a concessão de ______ diárias inteiras e ______
+              ( ) Autorizo a concessão de ______ diárias inteiras e ______
               diárias reduzidas.
             </Text>
             <Text style={{ marginTop: 10 }}>
-              () Autorizo o meio de transporte indicado no pedido.
+              ( ) Autorizo o meio de transporte indicado no pedido.
             </Text>
             <Text style={{ marginTop: 10 }}>
-              () Autorizo a antecipação de R$ ____________ para aquisição de
+              ( ) Autorizo a antecipação de R$ ____________ para aquisição de
               passagens.
             </Text>
             <Text style={{ marginTop: 10 }}>
-              () Indefiro a concessão de diárias.
+              ( ) Indefiro a concessão de diárias.
             </Text>
             <View style={styles.signatureLine} />
+            <Text>Data: ___/___/_____ </Text>
             <Text style={styles.signatureText}>Assinatura do Presidente</Text>
           </View>
         </View>
