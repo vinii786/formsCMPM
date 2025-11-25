@@ -14,7 +14,7 @@ import DeclaracaoNepotismo from "./pages/DeclaracaoNepotismo/DeclaracaoNepotismo
 import DeclaracaoFichaLimpa from "./pages/DeclaracaoFichaLimpa/DeclaracaoFichaLimpa";
 import SolicitacaoDiaria from "./pages/SolicitacaoDiaria/SolicitacaoDiaria";
 import RelatorioInspecaoMedica from "./pages/GESAT-RelatorioInspecaoMedica/RelatorioInspecaoMedica"
-import RequisicaoManualAlmoxarifado from "./pages/RequisicaoManualAlmoxarifado/RequisicaoManualAlmoxarifado"; 
+import RequisicaoManualAlmoxarifado from "./pages/RequisicaoManualAlmoxarifado/RequisicaoManualAlmoxarifado";
 
 function App() {
   return (
