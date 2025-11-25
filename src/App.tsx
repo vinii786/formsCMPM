@@ -14,6 +14,7 @@ import DeclaracaoNepotismo from "./pages/DeclaracaoNepotismo/DeclaracaoNepotismo
 import DeclaracaoFichaLimpa from "./pages/DeclaracaoFichaLimpa/DeclaracaoFichaLimpa";
 import SolicitacaoDiaria from "./pages/SolicitacaoDiaria/SolicitacaoDiaria";
 import RelatorioInspecaoMedica from "./pages/GESAT-RelatorioInspecaoMedica/RelatorioInspecaoMedica"
+import RequisicaoManualAlmoxarifado from "./pages/RequisicaoManualAlmoxarifado/RequisicaoManualAlmoxarifado"; 
 
 function App() {
   return (
@@ -43,7 +44,14 @@ function App() {
           <Route path="/solicitacao-cursos" element={<SolicitacaoCursos />} />
           <Route path="/SolicitacaoDiaria" element={<SolicitacaoDiaria />} />
           <Route path="/solicitacao-viagem" element={<SolicitacaoViagem />} /> 
-          {/* NAO ESTA EM USO  */}
+          
+          {/* 2. NOVA ROTA ADICIONADA */}
+          <Route 
+            path="/requisicao-manual-almoxarifado" 
+            element={<RequisicaoManualAlmoxarifado />} 
+          />
+          
+          {/* NAO ESTA EM USO  */}
           <Route path="/solicitacao-documentos"element={<SolicitacaoDocumentos />}/>
           <Route path="/solicitacao-estagiario"element={<SolicitacaoEstagiario />}/>
           <Route path="/inspecao-medica"element={<RelatorioInspecaoMedica />}/>
