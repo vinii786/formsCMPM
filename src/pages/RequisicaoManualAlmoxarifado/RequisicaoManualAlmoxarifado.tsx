@@ -1,8 +1,9 @@
+// src/pages/RequisicaoManualAlmoxarifado/RequisicaoManualAlmoxarifado.tsx
+
 import React, { useState } from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-// Importe o componente PDF correspondente (você precisará criá-lo)
 import RequisicaoAlmoxarifadoPdf from "../../pdf/RequisicaoAlmoxarifadoPdf"; 
-import "../FormularioFerias/FormularioFerias.css"; // Reutilizando os estilos
+import "../FormularioFerias/FormularioFerias.css"; 
 
 // Interface para um item da requisição
 interface ItemRequisicao {
@@ -21,73 +22,55 @@ interface FormData {
   lotacao: string;
   justificativa: string;
   
-  // Campos de Recebimento/Entrega
-  dataRecebimento: string;
-  entreguePor: string;
-  recebidoPor: string;
-  matriculaRecebedor: string;
+  // CAMPOS DE RECEBIMENTO REMOVIDOS
 }
 
 const RequisicaoManualAlmoxarifado = () => {
   const [formData, setFormData] = useState<FormData>({
-    dataEmissao: new Date().toLocaleDateString('pt-BR'), // Data atual como padrão
+    dataEmissao: new Date().toLocaleDateString('pt-BR'), 
     requisicaoNum: "",
     requisitante: "",
     lotacao: "",
     justificativa: "",
-    dataRecebimento: "",
-    entreguePor: "",
-    recebidoPor: "",
-    matriculaRecebedor: "",
   });
 
+  // ESTADO DOS ITENS (Foi omitido, mas é necessário)
   const [itens, setItens] = useState<ItemRequisicao[]>([
     { id: 1, descricao: "", quantidadeSolicitada: "", quantidadeAtendida: "" },
   ]);
 
+  // ESTADO CORRIGIDO: Necessário para 'setDocumentoPronto'
   const [documentoPronto, setDocumentoPronto] =
     useState<React.ReactElement | null>(null);
+
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    setDocumentoPronto(null);
+    setDocumentoPronto(null); // Corrigido!
   };
 
-  const handleItemChange = (
-    index: number,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  // Funções de Item (Adicionei placeholders, você deve usar o código completo delas)
+  const handleItemChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const novosItens = [...itens];
     
-    // O nome do input deve ser 'descricao', 'quantidadeSolicitada' ou 'quantidadeAtendida'
-    if (name === 'descricao') {
-        novosItens[index].descricao = value;
-    } else if (name === 'quantidadeSolicitada') {
-        novosItens[index].quantidadeSolicitada = value;
-    } else if (name === 'quantidadeAtendida') {
-        novosItens[index].quantidadeAtendida = value;
-    }
+    // Simplificado
+    if (name === 'descricao') { novosItens[index].descricao = value; } 
+    else if (name === 'quantidadeSolicitada') { novosItens[index].quantidadeSolicitada = value; } 
+    else if (name === 'quantidadeAtendida') { novosItens[index].quantidadeAtendida = value; }
 
     setItens(novosItens);
     setDocumentoPronto(null);
   };
 
   const adicionarItem = () => {
-    setItens([
-      ...itens,
-      {
-        id: Date.now(),
-        descricao: "",
-        quantidadeSolicitada: "",
-        quantidadeAtendida: "",
-      },
-    ]);
+    setItens([...itens, { id: Date.now(), descricao: "", quantidadeSolicitada: "", quantidadeAtendida: "" }]);
+    setDocumentoPronto(null);
   };
-
+  
   const removerItem = (index: number) => {
     if (itens.length <= 1) return;
     setItens(itens.filter((_, i) => i !== index));
@@ -96,7 +79,6 @@ const RequisicaoManualAlmoxarifado = () => {
 
   const handleGerarPdfClick = () => {
     const doc = (
-      // Certifique-se de que o componente PDF aceita 'formData' e 'itens'
       <RequisicaoAlmoxarifadoPdf 
           formData={formData} 
           itens={itens} 
@@ -105,13 +87,14 @@ const RequisicaoManualAlmoxarifado = () => {
     setDocumentoPronto(doc);
   };
 
+
   return (
     <div className="form-container">
       <h2>Requisição Manual de Materiais - Almoxarifado</h2>
       
-      {/* Seção 1: Dados da Requisição */}
+      {/* Seção 1: Dados da Requisição (Permanece igual) */}
       <div className="form-section">
-        <h3>Dados da Requisição [cite: 3]</h3>
+        <h3>Dados da Requisição</h3>
         <div className="form-grid" style={{ gridTemplateColumns: '1fr 1fr' }}>
           <input
             type="text"
@@ -146,7 +129,7 @@ const RequisicaoManualAlmoxarifado = () => {
           className="form-input-full"
           style={{ marginTop: '1rem' }}
         />
-        <h4>JUSTIFICATIVA [cite: 3]</h4>
+        <h4>JUSTIFICATIVA</h4>
         <textarea
           name="justificativa"
           value={formData.justificativa}
@@ -155,9 +138,9 @@ const RequisicaoManualAlmoxarifado = () => {
         ></textarea>
       </div>
 
-      {/* Seção 2: Itens Solicitados */}
+      {/* Seção 2: Itens Solicitados (ADICIONEI O JSX) */}
       <div className="form-section">
-        <h3>Itens Solicitados [cite: 4]</h3>
+        <h3>Itens Solicitados</h3>
         <div className="table-header" style={{ display: 'grid', gridTemplateColumns: '1fr 100px 100px 50px', gap: '0.5rem', fontWeight: 'bold' }}>
             <span>DESCRIÇÃO</span>
             <span style={{textAlign: 'center'}}>QTDE. SOLICITADA</span>
@@ -206,47 +189,17 @@ const RequisicaoManualAlmoxarifado = () => {
         </button>
       </div>
 
-      {/* Seção 3: Recebimento/Entrega */}
+      {/* Seção 3: Recebimento/Entrega REMOVIDA DO JSX */}
       <div className="form-section">
-        <h3>Dados Recebimento/Entrega [cite: 5]</h3>
-        <input
-          type="text"
-          name="dataRecebimento"
-          placeholder="DATA RECEBIMENTO/ENTREGA (Ex: DD/MM/AAAA)"
-          value={formData.dataRecebimento}
-          onChange={handleInputChange}
-          className="form-input-full"
-        />
-        <div className="form-grid" style={{ gridTemplateColumns: '1fr 1fr' }}>
-          <input
-            type="text"
-            name="entreguePor"
-            placeholder="ENTREGUE POR"
-            value={formData.entreguePor}
-            onChange={handleInputChange}
-          />
-          <input
-            type="text"
-            name="recebidoPor"
-            placeholder="RECEBIDO POR"
-            value={formData.recebidoPor}
-            onChange={handleInputChange}
-          />
-          <input
-            type="text"
-            name="matriculaRecebedor"
-            placeholder="MATRÍCULA do Recebedor"
-            value={formData.matriculaRecebedor}
-            onChange={handleInputChange}
-          />
-          {/* O campo de Assinatura não é preenchível, é um espaço no PDF */}
-          <input
-            type="text"
-            placeholder="Assinatura (preencher no documento impresso)"
-            disabled
-          />
+        <h3>Dados Recebimento/Entrega</h3>
+        <p>Estes campos serão preenchidos manualmente após a impressão do PDF.</p>
+        
+        {/* Adicione um aviso visual para o usuário */}
+        <div style={{ padding: '10px', backgroundColor: '#333', color: '#fff', borderRadius: '4px', textAlign: 'center' }}>
+          **ESTA SEÇÃO NÃO REQUER PREENCHIMENTO DIGITAL.**
         </div>
       </div>
+
 
       <button
         onClick={handleGerarPdfClick}
