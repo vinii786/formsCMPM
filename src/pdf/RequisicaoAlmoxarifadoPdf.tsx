@@ -1,7 +1,7 @@
 // src/pdf/RequisicaoAlmoxarifadoPdf.tsx
 
 import React from 'react';
-import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 
 // Interface de Tipos (Reutilizada do seu componente TSX)
 interface ItemRequisicao {
