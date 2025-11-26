@@ -195,8 +195,8 @@ const RequisicaoManualAlmoxarifado = () => {
         <p>Estes campos serão preenchidos manualmente após a impressão do PDF.</p>
         
         {/* Adicione um aviso visual para o usuário */}
-        <div style={{ padding: '10px', backgroundColor: '#333', color: '#fff', borderRadius: '4px', textAlign: 'center' }}>
-          **ESTA SEÇÃO NÃO REQUER PREENCHIMENTO DIGITAL.**
+        <div style={{ padding: '10px', backgroundColor: '#35679C', color: '#fff', borderRadius: '4px', textAlign: 'center' }}>
+          ESTA SEÇÃO NÃO REQUER PREENCHIMENTO DIGITAL.
         </div>
       </div>
 

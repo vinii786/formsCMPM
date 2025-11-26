@@ -17,18 +17,18 @@ import RelatorioInspecaoMedica from "./pages/GESAT-RelatorioInspecaoMedica/Relat
 import RequisicaoManualAlmoxarifado from "./pages/RequisicaoManualAlmoxarifado/RequisicaoManualAlmoxarifado";
 
 function App() {
-  return (
-    <div className="app-container">
-      <header className="app-header">
-        <Link
-          to="/"
-          className="header-link"
-          style={{ textDecoration: "none", color: "rgb(0, 86, 179)" }}
-        >
-          <h1>Câmara Municipal de Patos de Minas</h1>
-        </Link>
-      </header>
-
+  return (
+    <div className="app-container">
+      <header className="app-header">
+        {/* SUBSTITUÍDO: Link foi removido e trocado por um DIV simples */}
+        <div
+          className="header-text" // Nova classe para estilização
+          // ⬅️ ADICIONADO: text-align: center para centralizar o texto H1
+          style={{ color: "#35679C", textAlign: "center" }} 
+        >
+          <h1>Câmara Municipal de Patos de Minas</h1>
+        </div>
+      </header>
       <main className="app-main-content">
         <Routes>
 
@@ -44,14 +44,7 @@ function App() {
           <Route path="/solicitacao-cursos" element={<SolicitacaoCursos />} />
           <Route path="/SolicitacaoDiaria" element={<SolicitacaoDiaria />} />
           <Route path="/solicitacao-viagem" element={<SolicitacaoViagem />} /> 
-          
-          {/* 2. NOVA ROTA ADICIONADA */}
-          <Route 
-            path="/requisicao-manual-almoxarifado" 
-            element={<RequisicaoManualAlmoxarifado />} 
-          />
-          
-          {/* NAO ESTA EM USO  */}
+          <Route path="/requisicao-manual-almoxarifado" element={<RequisicaoManualAlmoxarifado />} />
           <Route path="/solicitacao-documentos"element={<SolicitacaoDocumentos />}/>
           <Route path="/solicitacao-estagiario"element={<SolicitacaoEstagiario />}/>
           <Route path="/inspecao-medica"element={<RelatorioInspecaoMedica />}/>

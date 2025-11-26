@@ -1,19 +1,25 @@
 /* app.css */
 
-/* ... (mantém estilos de font, body, etc. originais) ... */
+/* ... (código anterior) ... */
 
 /* Cabeçalho claro */
 .app-header {
     padding: 20px 40px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     border-bottom: 1px solid #eee;
-    background-color: #ffffff; 
+    background-color: #ffffff;
+    
+    /* ⬅️ NOVO: Centraliza usando text-align no PARENT e Flexbox */
+    display: flex !important; /* Força o Flexbox */
+    justify-content: center !important; /* Força a centralização horizontal */
+    text-align: center !important; /* Solução de fallback mais forte */
 }
 
 .header-link {
     text-decoration: none;
     color: inherit;
-    display: block;
+    /* ⬅️ NOVO: Altera display para inline-block para que o text-align funcione */
+    display: inline-block !important; 
     text-align: center;
     background-color: transparent; 
 }
@@ -27,7 +33,7 @@
 
 .app-header p {
     margin: 4px 0 0;
-    color: #555;
+    color: #424242;
 }
 
 /* Conteúdo principal da aplicação */
