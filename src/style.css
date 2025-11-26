@@ -1,28 +1,21 @@
 /* src/style.css */
-
-/* Removendo estilos de Dark Mode do :root para evitar conflitos */
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  /* Corrigindo o conflito de tema: */
-  color-scheme: light; /* Força o esquema de cores claro */
-  color: #242424; /* Texto principal deve ser escuro */
-  background-color: #ffffff; /* Fundo principal deve ser branco */
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Os estilos do body e App-header de terceiros não são necessários aqui, pois estão no app.css */
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+
+    /* Força o tema CLARO */
+    color-scheme: light;
+    /* Texto principal escuro */
+    color: #333; 
+    /* Fundo principal claro */
+    background-color: #f4f7f6;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
-/* ... (mantém estilos de link e button) ... */
+
+/* Você pode adicionar estilos de elementos HTML básicos (h1, a, button) 
+   aqui, se necessário, garantindo que usem cores escuras para o texto. */
