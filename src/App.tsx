@@ -1,4 +1,4 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePages";
 import FormularioFerias from "./pages/FormularioFerias/FormularioFerias";
 import OcorrenciaPonto from "./pages/OcorrenciaPonto/OcorrenciaPonto";
