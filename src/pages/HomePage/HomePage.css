@@ -1,12 +1,22 @@
 /* src/pages/HomePage/HomePage.css */
+
 .homepage-container {
-  max-width: 1250px;
-  margin: 0 auto;
+    max-width: 1250px;
+    margin: 0 auto; 
+    padding: 30px 0;
+    
+    /* Adicionado para centralizar a grade inteira na tela */
+    display: flex;
+    justify-content: center;
 }
 
 .card-container {
-  /* A MUDANÇA ESTÁ AQUI */
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* Cria 4 colunas de tamanho igual */
-  gap: 24px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 24px;
+    
+    /* Regras de centralização para a última linha (se for menor que 5 cards) */
+    justify-items: center; 
+    align-items: center;
+    width: 100%;
 }
