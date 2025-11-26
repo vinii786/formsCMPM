@@ -103,20 +103,12 @@ const HomePage = () => {
           icon={<FaBriefcaseMedical />}
         />
 
-        {/* ⬅️ NOVO CARTÃO ADICIONADO AQUI */}
         <FormCard
           title="Requisição Manual Almoxarifado"
           description="Formulário para requisição manual de materiais de consumo."
           linkTo="/requisicao-manual-almoxarifado"
           icon={<FaWarehouse />}
         />
-        
-        {/* <FormCard */}
-          {/* title="Solicitação de Viagem" */}
-          {/* description="Formulário para solicitar autorização para viagens." */}
-          {/* linkTo="/solicitacao-viagem" */}
-          {/* icon={<FaSuitcaseRolling />} */}
-        {/* /> */}
       </div>
     </div>
   );

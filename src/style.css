@@ -1,12 +1,15 @@
 /* src/style.css */
-body {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+/* Removendo estilos de Dark Mode do :root para evitar conflitos */
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* Corrigindo o conflito de tema: */
+  color-scheme: light; /* Força o esquema de cores claro */
+  color: #242424; /* Texto principal deve ser escuro */
+  background-color: #ffffff; /* Fundo principal deve ser branco */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -14,20 +17,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Os estilos do body e App-header de terceiros não são necessários aqui, pois estão no app.css */
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
 }
-
-/* Nossos estilos personalizados */
-.App-header {
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 2rem;
-}
-
-main {
-  text-align: left;
-}
+/* ... (mantém estilos de link e button) ... */
