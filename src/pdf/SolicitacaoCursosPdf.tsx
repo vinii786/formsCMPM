@@ -68,9 +68,10 @@ const styles = StyleSheet.create({
     paddingRight: 2,
     minHeight: 6,
   },
+  // --- ÁREA EDITADA ---
   parecerBox: {
     border: "1px solid #000",
-    height: 150,
+    height: 280, // Aumentado de 150 para 280
     marginTop: 5,
     padding: 5,
   },
@@ -78,24 +79,28 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 15,
+    marginTop: 30, // Aumentado de 15 para 30 (mais espaço acima da assinatura)
   },
-  signatureLine: { borderBottom: "1px solid #000", width: 180 },
+  signatureLine: { 
+    borderBottom: "1px solid #000", 
+    width: 280 // Aumentado de 180 para 280 (linha mais comprida)
+  },
+  // --------------------
   signatureText: { fontSize: 9, marginTop: 3, textAlign: "center" },
   outroLine: {
-    flex: 1, // Faz a linha se esticar até o final
+    flex: 1, 
     borderBottom: '1px solid #000',
     marginLeft: 3,
-    height: 10, // Define uma altura para a linha ser visível
+    height: 10, 
   },
   finalSectionRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 5, gap: 5 },
 
   optionsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    flex: 1, // Garante que o container ocupe o espaço restante
+    flex: 1, 
     marginLeft: 5,
-    gap: 10, // Espaço entre "IPREM", "INSS", "Outro:"
+    gap: 10, 
   },
 });
 
@@ -108,7 +113,7 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
       <Page size="A4" style={styles.page}>
         <Text style={styles.title}>
           FORMULÁRIO DE SOLICITAÇÃO DE APOIO A INICIATIVAS DE CAPACITAÇÃO CURSOS
-          DE CURTA E MÉDIA DURAÇÃO - VERSÃO 2
+          DE CURTA E MÉDIA DURAÇÃO 
         </Text>
 
         <View style={styles.section}>
@@ -164,18 +169,6 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
               </View>
 
             </View>
-            {/* <View style={styles.section}>
-              <Text> </Text>
-              <ul>
-                <Text>Função de Confiança ( ) Sim  ( ) Não</Text>
-              </ul>
-              <ul>
-                <Text>Cargo de Direção ( ) Sim  ( ) Não</Text>
-              </ul>
-              <Text>Função Gratificada ( ) Sim  ( ) Não Qual? ________________________________________________________</Text>
-              <Text> </Text>
-
-            </View> */}
 
             {formData.funcaoConfianca === "sim" && (
               <Text style={{ fontSize: 9, marginTop: 4 }}>
@@ -183,7 +176,7 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
                 {formData.tipoFuncao === "direcao"
                   ? "[X] Cargo de Direção"
                   : "[ ] Cargo de Direção"}
-                {"   "}
+                {"  "}
                 {formData.tipoFuncao === "gratificada"
                   ? "[X] Função Gratificada"
                   : "[ ] Função Gratificada"}{" "}
@@ -262,9 +255,8 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
               Utilização da capacitação para fins de progressão na carreira
               profissional?{" "}
               {formData.usoProgressao === "sim" ? "[X] sim" : "[ ] sim"}
-              {"   "}
+              {"  "}
               {formData.usoProgressao === "nao" ? "[X] não" : "[ ] não"}
-              {/* <Text>( ) Sim  ( ) Não</Text> */}
             </Text>
           </View>
         </View>
@@ -278,20 +270,18 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
               <Text style={{ fontSize: 9, marginBottom: 12 }}>
                 Inscrição:{" "}
                 {formData.solicitaInscricao === "sim" ? "[X] Sim" : "[ ] Sim"}
-                {"   "}
+                {"  "}
                 {formData.solicitaInscricao === "nao" ? "[X] Não" : "[ ] Não"}
-                {/* <Text>( ) Sim  ( ) Não</Text> */}
               </Text>
               <Text style={{ fontSize: 9 }}>
                 Mensalidade:{" "}
                 {formData.solicitaMensalidade === "sim"
                   ? "[X] Sim"
                   : "[ ] Sim"}
-                {"   "}
+                {"  "}
                 {formData.solicitaMensalidade === "nao"
                   ? "[X] Não"
                   : "[ ] Não"}
-                {/* <Text>( ) Sim  ( ) Não</Text> */}
               </Text>
             </View>
             <View style={{ ...styles.col, flex: 1, justifyContent: 'space-between' }}>
@@ -328,7 +318,7 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
       <Page size="A4" style={styles.page}>
         <Text style={styles.title}>
           FORMULÁRIO DE SOLICITAÇÃO DE APOIO A INICIATIVAS DE CAPACITAÇÃO CURSOS
-          DE CURTA E MÉDIA DURAÇÃO - VERSÃO 2
+          DE CURTA E MÉDIA DURAÇÃO 
         </Text>
         <View style={{ ...styles.section, marginTop: 20 }}>
           <Text style={styles.sectionTitle}>
