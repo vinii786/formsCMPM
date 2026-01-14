@@ -68,39 +68,48 @@ const styles = StyleSheet.create({
     paddingRight: 2,
     minHeight: 6,
   },
-  // --- ÁREA EDITADA ---
+  
+  // --- AJUSTES PARA CABER NA FOLHA E ALARGAR ASSINATURA ---
   parecerBox: {
     border: "1px solid #000",
-    height: 280, // Aumentado de 150 para 280
+    height: 230, // Reduzido de 280 para 230 para garantir que os dois caibam na página 2
     marginTop: 5,
     padding: 5,
   },
   signatureBlock: {
     flexDirection: "row",
+    alignItems: "flex-end", // Alinha a base do texto com a linha
     justifyContent: "space-between",
+    marginTop: 20, 
+    paddingHorizontal: 5,
+    paddingBottom: 5
+  },
+  signatureLeft: {
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    gap: 5
+  },
+  signatureRight: {
     alignItems: "center",
-    marginTop: 30, // Aumentado de 15 para 30 (mais espaço acima da assinatura)
+    flex: 1, // Ocupa o espaço restante
+    marginLeft: 20 // Afasta um pouco da data
   },
   signatureLine: { 
     borderBottom: "1px solid #000", 
-    width: 280 // Aumentado de 180 para 280 (linha mais comprida)
+    width: "100%" // Ocupa 100% do espaço disponível na direita
   },
-  // --------------------
-  signatureText: { fontSize: 9, marginTop: 3, textAlign: "center" },
+  signatureText: { 
+    fontSize: 9, 
+    marginTop: 3, 
+    textAlign: "center" 
+  },
+  // ---------------------------------------------------------
+
   outroLine: {
     flex: 1, 
     borderBottom: '1px solid #000',
     marginLeft: 3,
     height: 10, 
-  },
-  finalSectionRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 5, gap: 5 },
-
-  optionsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1, 
-    marginLeft: 5,
-    gap: 10, 
   },
 });
 
@@ -109,7 +118,7 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
 
   return (
     <Document>
-      {/* PÁGINA 1 */}
+      {/* PÁGINA 1 - DADOS DO SERVIDOR E CURSO */}
       <Page size="A4" style={styles.page}>
         <Text style={styles.title}>
           FORMULÁRIO DE SOLICITAÇÃO DE APOIO A INICIATIVAS DE CAPACITAÇÃO CURSOS
@@ -167,7 +176,6 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
                 <Text style={styles.fieldLabel}>Email:</Text>
                 <Text style={styles.fieldValueEmail}>{formData.emailServidor}</Text>
               </View>
-
             </View>
 
             {formData.funcaoConfianca === "sim" && (
@@ -314,35 +322,45 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
         </View>
       </Page>
 
-      {/* PÁGINA 2 */}
+      {/* PÁGINA 2 - PARECERES */}
       <Page size="A4" style={styles.page}>
         <Text style={styles.title}>
           FORMULÁRIO DE SOLICITAÇÃO DE APOIO A INICIATIVAS DE CAPACITAÇÃO CURSOS
           DE CURTA E MÉDIA DURAÇÃO 
         </Text>
-        <View style={{ ...styles.section, marginTop: 20 }}>
+        
+        {/* Bloco Superior Imediato */}
+        <View style={{ ...styles.section, marginTop: 20 }} wrap={false}>
           <Text style={styles.sectionTitle}>
             PARECER FUNDAMENTADO DO(A) SUPERIOR(A) IMEDIATO (A)
           </Text>
           <View style={styles.parecerBox} />
+          
           <View style={styles.signatureBlock}>
-            <Text>DATA: ____/____/______</Text>
-            <Text>( ) DEFERIDO ( ) INDEFERIDO</Text>
-            <View style={{ alignItems: "center" }}>
+            <View style={styles.signatureLeft}>
+                <Text>DATA: ____/____/______</Text>
+                <Text>( ) DEFERIDO ( ) INDEFERIDO</Text>
+            </View>
+            <View style={styles.signatureRight}>
               <View style={styles.signatureLine} />
               <Text style={styles.signatureText}>ASSINATURA</Text>
             </View>
           </View>
         </View>
-        <View style={{ ...styles.section, marginTop: 20 }}>
+
+        {/* Bloco Diretor Geral */}
+        <View style={{ ...styles.section, marginTop: 20 }} wrap={false}>
           <Text style={styles.sectionTitle}>
             PARECER FUNDAMENTADO DO(A) DIRETOR(A) GERAL
           </Text>
           <View style={styles.parecerBox} />
+          
           <View style={styles.signatureBlock}>
-            <Text>DATA: ____/____/______</Text>
-            <Text>( ) DEFERIDO ( ) INDEFERIDO</Text>
-            <View style={{ alignItems: "center" }}>
+             <View style={styles.signatureLeft}>
+                <Text>DATA: ____/____/______</Text>
+                <Text>( ) DEFERIDO ( ) INDEFERIDO</Text>
+            </View>
+            <View style={styles.signatureRight}>
               <View style={styles.signatureLine} />
               <Text style={styles.signatureText}>ASSINATURA</Text>
             </View>
