@@ -69,41 +69,42 @@ const styles = StyleSheet.create({
     minHeight: 6,
   },
   
-  // --- AJUSTES PARA CABER NA FOLHA E ALARGAR ASSINATURA ---
+  // --- ÁREA DE AJUSTES ---
   parecerBox: {
     border: "1px solid #000",
-    height: 230, // Reduzido de 280 para 230 para garantir que os dois caibam na página 2
+    height: 200, // Reduzido de 230 para 200 (para sobrar espaço para assinatura)
     marginTop: 5,
     padding: 5,
   },
   signatureBlock: {
     flexDirection: "row",
-    alignItems: "flex-end", // Alinha a base do texto com a linha
+    alignItems: "flex-end", 
     justifyContent: "space-between",
-    marginTop: 20, 
+    marginTop: 50, // Aumentado de 20 para 50 (Aqui está o 2x mais espaço vertical)
     paddingHorizontal: 5,
-    paddingBottom: 5
+    paddingBottom: 10
   },
   signatureLeft: {
     flexDirection: 'column',
     justifyContent: 'flex-end',
-    gap: 5
+    gap: 8, // Mais espaço entre data e deferido
+    marginBottom: 2
   },
   signatureRight: {
     alignItems: "center",
-    flex: 1, // Ocupa o espaço restante
-    marginLeft: 20 // Afasta um pouco da data
+    flex: 1, 
+    marginLeft: 30 
   },
   signatureLine: { 
     borderBottom: "1px solid #000", 
-    width: "100%" // Ocupa 100% do espaço disponível na direita
+    width: "100%" 
   },
   signatureText: { 
     fontSize: 9, 
-    marginTop: 3, 
+    marginTop: 5, 
     textAlign: "center" 
   },
-  // ---------------------------------------------------------
+  // -----------------------
 
   outroLine: {
     flex: 1, 
