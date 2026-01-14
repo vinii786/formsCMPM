@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   // --- ÁREA DE AJUSTES ---
   parecerBox: {
     border: "1px solid #000",
-    height: 200, // Reduzido de 230 para 200 (para sobrar espaço para assinatura)
+    height: 200, 
     marginTop: 5,
     padding: 5,
   },
@@ -80,15 +80,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-end", 
     justifyContent: "space-between",
-    marginTop: 50, // Aumentado de 20 para 50 (Aqui está o 2x mais espaço vertical)
+    marginTop: 50, 
     paddingHorizontal: 5,
     paddingBottom: 10
   },
   signatureLeft: {
     flexDirection: 'column',
     justifyContent: 'flex-end',
-    gap: 8, // Mais espaço entre data e deferido
-    marginBottom: 2
+    gap: 15, // Espaçamento vertical entre Data e Deferido
+    marginBottom: 2,
+    fontSize: 12, // Fonte maior
+    fontFamily: "Helvetica" // Sem negrito
   },
   signatureRight: {
     alignItems: "center",
@@ -340,7 +342,8 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
           <View style={styles.signatureBlock}>
             <View style={styles.signatureLeft}>
                 <Text>DATA: ____/____/______</Text>
-                <Text>( ) DEFERIDO ( ) INDEFERIDO</Text>
+                {/* Parênteses com espaço extra */}
+                <Text>(   ) DEFERIDO (   ) INDEFERIDO</Text>
             </View>
             <View style={styles.signatureRight}>
               <View style={styles.signatureLine} />
@@ -359,7 +362,8 @@ const SolicitacaoCursosPdf = ({ formData }: { formData: FormData }) => {
           <View style={styles.signatureBlock}>
              <View style={styles.signatureLeft}>
                 <Text>DATA: ____/____/______</Text>
-                <Text>( ) DEFERIDO ( ) INDEFERIDO</Text>
+                {/* Parênteses com espaço extra */}
+                <Text>(   ) DEFERIDO (   ) INDEFERIDO</Text>
             </View>
             <View style={styles.signatureRight}>
               <View style={styles.signatureLine} />
