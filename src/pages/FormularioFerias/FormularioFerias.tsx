@@ -11,13 +11,12 @@ interface FormData {
   lotacao: string;
   periodoGozo: "30" | "20" | "15" | "10";
   dataInicio: string;
-  observacoes: string;
+  justificativa: string;
   outrosDias: string;
   dataRequerimento: Date;
 }
 
 const FormularioFerias = () => {
-  // A correção foi aplicada aqui, adicionando <FormData>
   const [formData, setFormData] = useState<FormData>({
     nome: "",
     matricula: "",
@@ -25,7 +24,7 @@ const FormularioFerias = () => {
     lotacao: "",
     periodoGozo: "30",
     dataInicio: "",
-    observacoes: "",
+    justificativa: "",
     outrosDias: "",
     dataRequerimento: new Date(),
   });
@@ -40,9 +39,19 @@ const FormularioFerias = () => {
   };
 
   const handlePeriodoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPdfPronto(false); // Esconde o botão de download se mudar os dias
     const value = e.target.value as "30" | "20" | "15" | "10";
-    setFormData((prev) => ({ ...prev, periodoGozo: value }));
+    setFormData((prev) => ({
+      ...prev,
+      periodoGozo: value,
+      // Limpa a justificativa se voltar para 30 dias
+      justificativa: value === "30" ? "" : prev.justificativa,
+    }));
   };
+
+  // Regra: Válido se for 30 dias, OU se a justificativa não estiver vazia
+  const isFormValid =
+    formData.periodoGozo === "30" || formData.justificativa.trim() !== "";
 
   return (
     <div className="form-container">
@@ -159,13 +168,38 @@ const FormularioFerias = () => {
         />
       </div>
       <div className="form-section">
-        <label>Observações:</label>
+        <label>
+          Justificativa{" "}
+          <i>
+            (em caso de período de gozo diferente de 30 dias ou em caso de
+            parcelamento das férias)
+          </i>
+          :
+        </label>
         <textarea
-          name="observacoes"
-          placeholder="Observações..."
-          value={formData.observacoes}
+          name="justificativa"
+          placeholder="Obrigatório caso haja parcelamento ou solicitação inferior a 30 dias"
+          value={formData.justificativa}
           onChange={handleInputChange}
+          disabled={formData.periodoGozo === "30"}
+          style={{
+            backgroundColor: formData.periodoGozo === "30" ? "#e9ecef" : "#fff",
+            cursor: formData.periodoGozo === "30" ? "not-allowed" : "text",
+          }}
         ></textarea>
+
+        {!isFormValid && (
+          <span
+            style={{
+              color: "red",
+              fontSize: "0.85rem",
+              marginTop: "5px",
+              display: "block",
+            }}
+          >
+            * Preencha a justificativa para prosseguir.
+          </span>
+        )}
       </div>
 
       {!pdfPronto ? (
@@ -173,6 +207,12 @@ const FormularioFerias = () => {
           type="button"
           className="generate-pdf-button"
           onClick={() => setPdfPronto(true)}
+          disabled={!isFormValid}
+          style={{
+            opacity: !isFormValid ? 0.5 : 1,
+            cursor: !isFormValid ? "not-allowed" : "pointer",
+            marginTop: "15px",
+          }}
         >
           Preparar PDF para Download
         </button>
@@ -181,6 +221,7 @@ const FormularioFerias = () => {
           document={<FeriasPdfDocument data={formData as any} />}
           fileName="requerimento_ferias.pdf"
           className="generate-pdf-button"
+          style={{ marginTop: "15px", display: "inline-block" }}
         >
           {({ loading }) => (loading ? "Processando..." : "Baixar PDF")}
         </PDFDownloadLink>

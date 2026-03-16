@@ -10,7 +10,7 @@ interface FormData {
   lotacao: string;
   periodoGozo: "30" | "20" | "15" | "10";
   dataInicio: string;
-  observacoes: string;
+  justificativa: string;
   outrosDias: string;
   dataRequerimento: Date;
 }
@@ -196,9 +196,9 @@ const FeriasPdfDocument: React.FC<PdfProps> = ({ data }) => {
           <Text style={{ marginTop: 10 }}>
             a partir de: {formatDataInicio(data.dataInicio)}
           </Text>
-          <Text style={{ marginTop: 10 }}>Observações:</Text>
+          <Text style={{ marginTop: 10 }}>Justificativa:</Text>
           <Text style={{ ...styles.fieldValue, minHeight: 24 }}>
-            {data.observacoes || " "}
+            {data.justificativa || " "}
           </Text>
         </View>
 
