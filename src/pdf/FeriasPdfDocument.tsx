@@ -136,8 +136,8 @@ const FeriasPdfDocument: React.FC<PdfProps> = ({ data }) => {
         <Text style={{ marginTop: 5 }}>
           § 2º Somente serão considerados como não gozadas, por absoluta
           necessidade do serviço, as férias que o servidor deixar de gozar,
-          mediante decisão escrita do Prefeito ou Presidente da Câmara, exarada
-          em processo e publicada na forma legal, dentro do exercício a que elas
+          mediante decisão escrita do Presidente da Câmara, exarada em processo
+          e publicada na forma legal, dentro do exercício a que elas
           correspondem.
         </Text>
 
