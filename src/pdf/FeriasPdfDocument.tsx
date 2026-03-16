@@ -8,7 +8,7 @@ interface FormData {
   matricula: string;
   cpf: string;
   lotacao: string;
-  periodoGozo: "30" | "outro";
+  periodoGozo: "30" | "20" | "15" | "10";
   dataInicio: string;
   observacoes: string;
   outrosDias: string;
@@ -117,8 +117,32 @@ const FeriasPdfDocument: React.FC<PdfProps> = ({ data }) => {
 
         <Text style={styles.title}>REQUERIMENTO DE FÉRIAS REGULAMENTARES</Text>
 
+        <Text>
+          DISPÕE SOBRE O ESTATUTO DOS SERVIDORES PÚBLICOS DO MUNICÍPIO DE PATOS
+          DE MINAS.
+        </Text>
+
+        <Text style={{ marginTop: 5 }}>
+          Art. 69 É proibida a acumulação de férias, salvo por absoluta
+          necessidade do serviço e pelo Maximo de 2 (dois) anos.
+        </Text>
+
+        <Text style={{ marginTop: 5 }}>
+          § 1º Em casos excepcionais, à critério da administração, as férias
+          poderão ser gozadas em 2 (dois) períodos, nenhum dos quais poderá ser
+          inferior a 10 (dez) dias.
+        </Text>
+
+        <Text style={{ marginTop: 5 }}>
+          § 2º Somente serão considerados como não gozadas, por absoluta
+          necessidade do serviço, as férias que o servidor deixar de gozar,
+          mediante decisão escrita do Prefeito ou Presidente da Câmara, exarada
+          em processo e publicada na forma legal, dentro do exercício a que elas
+          correspondem.
+        </Text>
+
         {/* SEÇÃO 1: DADOS DO REQUISITANTE (em 2 linhas) */}
-        <View style={styles.section}>
+        <View style={{ ...styles.section, marginTop: 10 }}>
           <Text style={styles.sectionTitle}>1. Dados do requisitante</Text>
           <View style={styles.row}>
             <View style={styles.col}>
@@ -153,12 +177,21 @@ const FeriasPdfDocument: React.FC<PdfProps> = ({ data }) => {
         {/* SEÇÃO 2: PERÍODO DE GOZO */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>2. Período de gozo</Text>
-          <Text>{data.periodoGozo === "30" ? "[X]" : "[ ]"} 30 dias</Text>
-          <Text style={{ marginTop: 5 }}>
-            {data.periodoGozo === "outro" ? "[X]" : "[ ]"} Outro(s) período(s){" "}
-            {data.periodoGozo === "outro" && data.outrosDias
-              ? `(${data.outrosDias} dias)`
-              : ""}
+          <Text style={{ fontSize: "1.2rem" }}>
+            {data.periodoGozo === "30" ? "[X]" : "[  ]"} 30 dias (não necessita
+            autorização da presidência)
+          </Text>
+          <Text style={{ fontSize: "1.2rem", marginTop: 5 }}>
+            {data.periodoGozo === "20" ? "[X]" : "[  ]"} 20 dias (necessita
+            autorização da presidência)
+          </Text>
+          <Text style={{ fontSize: "1.2rem", marginTop: 5 }}>
+            {data.periodoGozo === "15" ? "[X]" : "[  ]"} 15 dias (necessita
+            autorização da presidência)
+          </Text>
+          <Text style={{ fontSize: "1.2rem", marginTop: 5 }}>
+            {data.periodoGozo === "10" ? "[X]" : "[  ]"} 10 dias (necessita
+            autorização da presidência)
           </Text>
           <Text style={{ marginTop: 10 }}>
             a partir de: {formatDataInicio(data.dataInicio)}
@@ -180,12 +213,24 @@ const FeriasPdfDocument: React.FC<PdfProps> = ({ data }) => {
 
         {/* SEÇÃO DE AUTORIZAÇÃO */}
         <View style={{ ...styles.section, marginTop: 20 }}>
-          <Text>Autorizado por (carimbo e assinatura):</Text>
-          <View style={{ height: 40 }}></View>
+          <Text>Autorizado por chefe imediato (carimbo e assinatura):</Text>
+          <View style={{ height: 50 }}></View>
         </View>
 
+        {data.periodoGozo !== "30" && (
+          <View style={{ ...styles.section }}>
+            <Text>Autorizado por presidência (carimbo e assinatura):</Text>
+            <View style={{ height: 50 }}></View>
+          </View>
+        )}
+
         {/* SEÇÃO DO RH - COM A ALTERAÇÃO SOLICITADA */}
-        <View style={{ ...styles.section }}>
+        <View
+          style={{
+            ...styles.section,
+            marginTop: data.periodoGozo === "30" ? 76 : 0,
+          }}
+        >
           <View style={styles.fieldContainer}>
             <Text style={styles.fieldLabel}>Período aquisitivo:</Text>
             <Text style={styles.fieldValue}> </Text>

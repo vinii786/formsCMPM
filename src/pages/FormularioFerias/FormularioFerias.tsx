@@ -9,7 +9,7 @@ interface FormData {
   matricula: string;
   cpf: string;
   lotacao: string;
-  periodoGozo: "30" | "outro";
+  periodoGozo: "30" | "20" | "15" | "10";
   dataInicio: string;
   observacoes: string;
   outrosDias: string;
@@ -29,22 +29,45 @@ const FormularioFerias = () => {
     outrosDias: "",
     dataRequerimento: new Date(),
   });
+  const [pdfPronto, setPdfPronto] = useState(false);
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
+    setPdfPronto(false);
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handlePeriodoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value as "30" | "outro";
+    const value = e.target.value as "30" | "20" | "15" | "10";
     setFormData((prev) => ({ ...prev, periodoGozo: value }));
   };
 
   return (
     <div className="form-container">
       <h2>Requerimento de Férias Regulamentares</h2>
+      <p>LEI COMPLEMENTAR Nº 2/1990</p>
+      <p>
+        DISPÕE SOBRE O ESTATUTO DOS SERVIDORES PÚBLICOS DO MUNICÍPIO DE PATOS DE
+        MINAS.
+      </p>
+      <p>
+        Art. 69 É proibida a acumulação de férias, salvo por absoluta
+        necessidade do serviço e pelo Maximo de 2 (dois) anos.
+      </p>
+      <p>
+        § 1º Em casos excepcionais, à critério da administração, as férias
+        poderão ser gozadas em 2 (dois) períodos, nenhum dos quais poderá ser
+        inferior a 10 (dez) dias.
+      </p>
+      <p>
+        § 2º Somente serão considerados como não gozadas, por absoluta
+        necessidade do serviço, as férias que o servidor deixar de gozar,
+        mediante decisão escrita do Prefeito ou Presidente da Câmara, exarada em
+        processo e publicada na forma legal, dentro do exercício a que elas
+        correspondem.
+      </p>
       <div className="form-section">
         <h3>1. Dados do requisitante</h3>
         <div className="form-grid">
@@ -91,30 +114,40 @@ const FormularioFerias = () => {
             />{" "}
             30 dias
           </label>
+
           <label>
             <input
               type="radio"
               name="periodoGozo"
-              value="outro"
-              checked={formData.periodoGozo === "outro"}
+              value="20"
+              checked={formData.periodoGozo === "20"}
               onChange={handlePeriodoChange}
             />{" "}
-            Outro(s) período(s)
+            20 dias
+          </label>
+
+          <label>
+            <input
+              type="radio"
+              name="periodoGozo"
+              value="15"
+              checked={formData.periodoGozo === "15"}
+              onChange={handlePeriodoChange}
+            />{" "}
+            15 dias
+          </label>
+
+          <label>
+            <input
+              type="radio"
+              name="periodoGozo"
+              value="10"
+              checked={formData.periodoGozo === "10"}
+              onChange={handlePeriodoChange}
+            />{" "}
+            10 dias
           </label>
         </div>
-        {formData.periodoGozo === "outro" && (
-          <div className="conditional-input">
-            <label htmlFor="outrosDias">Quantos dias?</label>
-            <input
-              id="outrosDias"
-              type="number"
-              name="outrosDias"
-              value={formData.outrosDias}
-              onChange={handleInputChange}
-              placeholder="Ex: 15"
-            />
-          </div>
-        )}
         <label style={{ marginTop: "1rem", display: "block" }}>
           A partir de:
         </label>
@@ -135,13 +168,23 @@ const FormularioFerias = () => {
         ></textarea>
       </div>
 
-      <PDFDownloadLink
-        document={<FeriasPdfDocument data={formData as any} />}
-        fileName="requerimento_ferias.pdf"
-        className="generate-pdf-button"
-      >
-        {({ loading }) => (loading ? "Gerando PDF..." : "Gerar PDF")}
-      </PDFDownloadLink>
+      {!pdfPronto ? (
+        <button
+          type="button"
+          className="generate-pdf-button"
+          onClick={() => setPdfPronto(true)}
+        >
+          Preparar PDF para Download
+        </button>
+      ) : (
+        <PDFDownloadLink
+          document={<FeriasPdfDocument data={formData as any} />}
+          fileName="requerimento_ferias.pdf"
+          className="generate-pdf-button"
+        >
+          {({ loading }) => (loading ? "Processando..." : "Baixar PDF")}
+        </PDFDownloadLink>
+      )}
     </div>
   );
 };
