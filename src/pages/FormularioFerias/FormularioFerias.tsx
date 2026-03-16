@@ -73,7 +73,7 @@ const FormularioFerias = () => {
       <p>
         § 2º Somente serão considerados como não gozadas, por absoluta
         necessidade do serviço, as férias que o servidor deixar de gozar,
-        mediante decisão escrita Presidente da Câmara, exarada em processo e
+        mediante decisão escrita do Presidente da Câmara, exarada em processo e
         publicada na forma legal, dentro do exercício a que elas correspondem.
       </p>
       <div className="form-section">
