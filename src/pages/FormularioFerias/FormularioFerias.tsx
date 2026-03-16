@@ -29,10 +29,12 @@ const FormularioFerias = () => {
     outrosDias: "",
     dataRequerimento: new Date(),
   });
+  const [pdfPronto, setPdfPronto] = useState(false);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
+    setPdfPronto(false);
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -166,13 +168,23 @@ const FormularioFerias = () => {
         ></textarea>
       </div>
 
-      <PDFDownloadLink
-        document={<FeriasPdfDocument data={formData as any} />}
-        fileName="requerimento_ferias.pdf"
-        className="generate-pdf-button"
-      >
-        {({ loading }) => (loading ? "Gerando PDF..." : "Gerar PDF")}
-      </PDFDownloadLink>
+      {!pdfPronto ? (
+        <button
+          type="button"
+          className="generate-pdf-button"
+          onClick={() => setPdfPronto(true)}
+        >
+          Preparar PDF para Download
+        </button>
+      ) : (
+        <PDFDownloadLink
+          document={<FeriasPdfDocument data={formData as any} />}
+          fileName="requerimento_ferias.pdf"
+          className="generate-pdf-button"
+        >
+          {({ loading }) => (loading ? "Processando..." : "Baixar PDF")}
+        </PDFDownloadLink>
+      )}
     </div>
   );
 };
