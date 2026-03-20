@@ -1,6 +1,7 @@
 // src/pages/SolicitacaoCursos/SolicitacaoCursos.tsx
 import React, { useState, useEffect } from "react";
 import "../FormularioFerias/FormularioFerias.css";
+import LZString from "lz-string";
 
 import FormServidor from "./components/FormServidor";
 import FormSuperiorImediato from "./components/FormSuperiorImediato";
@@ -91,11 +92,11 @@ const SolicitacaoCursos = () => {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const dadosBase64 = params.get("dados");
+    const dadosPdf = params.get("dados");
 
-    if (dadosBase64) {
+    if (dadosPdf) {
       try {
-        const jsonString = decodeURIComponent(atob(dadosBase64));
+        const jsonString = LZString.decompressFromEncodedURIComponent(dadosPdf);
         const dadosRecuperados = JSON.parse(jsonString);
 
         setFormData((prev) => ({ ...prev, ...dadosRecuperados }));
@@ -136,8 +137,8 @@ const SolicitacaoCursos = () => {
     setFormData(dadosAtualizados);
 
     const jsonString = JSON.stringify(dadosAtualizados);
-    const base64 = btoa(encodeURIComponent(jsonString));
-    const url = `${window.location.origin}${window.location.pathname}?dados=${base64}`;
+    const dadosPdf = LZString.compressToEncodedURIComponent(jsonString);
+    const url = `${window.location.origin}${window.location.pathname}?dados=${dadosPdf}`;
 
     setUrlGerada(url);
     setLinkGerado(true);
