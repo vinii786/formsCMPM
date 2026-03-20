@@ -11,6 +11,8 @@ interface FormSuperiorImediatoProps {
   ) => void;
   disabled: boolean;
   onGerarLink: () => void;
+  onCopiarLink: () => void;
+  linkGerado: boolean;
 }
 
 const FormSuperiorImediato: React.FC<FormSuperiorImediatoProps> = ({
@@ -18,6 +20,8 @@ const FormSuperiorImediato: React.FC<FormSuperiorImediatoProps> = ({
   onChange,
   disabled,
   onGerarLink,
+  onCopiarLink,
+  linkGerado,
 }) => {
   const isFormValid =
     formData.parecerSuperior.trim() !== "" && formData.decisaoSuperior !== "";
@@ -63,22 +67,40 @@ const FormSuperiorImediato: React.FC<FormSuperiorImediatoProps> = ({
       </div>
 
       {!disabled && (
-        <button
-          onClick={onGerarLink}
-          className="generate-pdf-button"
-          style={{
-            backgroundColor: "#28a745",
-            marginTop: "1rem",
-            width: "100%",
-            opacity: !isFormValid ? 0.5 : 1,
-            cursor: !isFormValid ? "not-allowed" : "pointer",
-          }}
-          disabled={!isFormValid}
-        >
-          {isFormValid
-            ? "Gerar Link para Diretor Geral"
-            : "Preencha o Parecer e a Decisão para continuar"}
-        </button>
+        <>
+          {!linkGerado ? (
+            <button
+              type="button"
+              onClick={onGerarLink}
+              disabled={!isFormValid}
+              className="generate-pdf-button"
+              style={{
+                backgroundColor: "#28a745",
+                marginTop: "1rem",
+                width: "100%",
+                opacity: !isFormValid ? 0.5 : 1,
+                cursor: !isFormValid ? "not-allowed" : "pointer",
+              }}
+            >
+              {isFormValid
+                ? "Preparar Link"
+                : "Preencha o parecer e a decisão para continuar"}
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={onCopiarLink}
+              className="generate-pdf-button"
+              style={{
+                backgroundColor: "#218838",
+                marginTop: "1rem",
+                width: "100%",
+              }}
+            >
+              Copiar Link
+            </button>
+          )}
+        </>
       )}
     </fieldset>
   );

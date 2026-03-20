@@ -11,6 +11,8 @@ interface FormServidorProps {
   ) => void;
   disabled: boolean;
   onGerarLink: () => void;
+  onCopiarLink: () => void;
+  linkGerado: boolean;
 }
 
 const FormServidor: React.FC<FormServidorProps> = ({
@@ -18,6 +20,8 @@ const FormServidor: React.FC<FormServidorProps> = ({
   onChange,
   disabled,
   onGerarLink,
+  onCopiarLink,
+  linkGerado,
 }) => {
   const isFormValid =
     formData.nome.trim() !== "" && formData.matricula.trim() !== "";
@@ -341,21 +345,39 @@ const FormServidor: React.FC<FormServidorProps> = ({
       </div>
 
       {!disabled && (
-        <button
-          onClick={onGerarLink}
-          className="generate-pdf-button"
-          style={{
-            marginTop: "2rem",
-            width: "100%",
-            opacity: !isFormValid ? 0.5 : 1,
-            cursor: !isFormValid ? "not-allowed" : "pointer",
-          }}
-          disabled={!isFormValid}
-        >
-          {isFormValid
-            ? "Gerar Link para Superior Imediato"
-            : "Preencha o formulário para continuar"}
-        </button>
+        <>
+          {!linkGerado ? (
+            <button
+              type="button"
+              onClick={onGerarLink}
+              disabled={!isFormValid}
+              className="generate-pdf-button"
+              style={{
+                marginTop: "2rem",
+                width: "100%",
+                opacity: !isFormValid ? 0.5 : 1,
+                cursor: !isFormValid ? "not-allowed" : "pointer",
+              }}
+            >
+              {isFormValid
+                ? "Preparar Link"
+                : "Preencha o formulário para continuar"}
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={onCopiarLink}
+              className="generate-pdf-button"
+              style={{
+                marginTop: "2rem",
+                width: "100%",
+                backgroundColor: "#0056b3",
+              }}
+            >
+              Copiar Link
+            </button>
+          )}
+        </>
       )}
     </fieldset>
   );

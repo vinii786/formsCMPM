@@ -1,8 +1,9 @@
 // src/pages/SolicitacaoCursos/SolicitacaoCursos.tsx
 import React, { useState, useEffect } from "react";
 import "../FormularioFerias/FormularioFerias.css";
+
 import FormServidor from "./components/FormServidor";
-import FormSuperior from "./components/FormSuperiorImediato";
+import FormSuperiorImediato from "./components/FormSuperiorImediato";
 import FormDiretorGeral from "./components/FormDiretorGeral";
 
 export interface FormData {
@@ -36,7 +37,6 @@ export interface FormData {
   solicitaMensalidade: "sim" | "nao";
   valorMensalidade: string;
   valorTotal: string;
-  // NOVOS CAMPOS PARA OS PARECERES
   parecerSuperior: string;
   decisaoSuperior: "deferido" | "indeferido" | "";
   dataSuperior: string;
@@ -84,31 +84,29 @@ const SolicitacaoCursos = () => {
     decisaoDiretor: "",
     dataDiretor: "",
   });
-
   const [fase, setFase] = useState<1 | 2 | 3>(1);
   const [pdfPronto, setPdfPronto] = useState(false);
+  const [linkGerado, setLinkGerado] = useState(false);
+  const [urlGerada, setUrlGerada] = useState("");
 
-  // Lê a URL ao carregar a página para definir a fase
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const dadosBase64 = params.get("dados");
 
     if (dadosBase64) {
       try {
-        // Usamos decodeURIComponent para evitar problemas com acentos no Base64
         const jsonString = decodeURIComponent(atob(dadosBase64));
         const dadosRecuperados = JSON.parse(jsonString);
 
         setFormData((prev) => ({ ...prev, ...dadosRecuperados }));
 
-        // Lógica para descobrir a fase
         if (
           dadosRecuperados.parecerSuperior &&
           !dadosRecuperados.parecerDiretor
         ) {
-          setFase(3); // Se o superior já deu parecer, é a vez do Diretor (Fase 3)
+          setFase(3);
         } else if (dadosRecuperados.nome) {
-          setFase(2); // Se tem nome, mas não tem parecer, é a vez do Superior (Fase 2)
+          setFase(2);
         }
       } catch (error) {
         console.error("Erro ao ler dados da URL", error);
@@ -125,10 +123,10 @@ const SolicitacaoCursos = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     setPdfPronto(false);
+    setLinkGerado(false);
   };
 
   const handleGerarLink = () => {
-    // Adiciona a data automática para quem está assinando a etapa
     const dadosAtualizados = { ...formData };
     const hoje = new Date().toLocaleDateString("pt-BR");
 
@@ -137,17 +135,17 @@ const SolicitacaoCursos = () => {
 
     setFormData(dadosAtualizados);
 
-    // Converte para JSON e depois para Base64 seguro para URL
     const jsonString = JSON.stringify(dadosAtualizados);
     const base64 = btoa(encodeURIComponent(jsonString));
-
     const url = `${window.location.origin}${window.location.pathname}?dados=${base64}`;
 
-    // Copia para a área de transferência
-    navigator.clipboard.writeText(url);
-    alert(
-      "Link gerado e copiado com sucesso! Envie para o próximo responsável.",
-    );
+    setUrlGerada(url);
+    setLinkGerado(true);
+  };
+
+  const handleCopiarLink = () => {
+    navigator.clipboard.writeText(urlGerada);
+    alert("Link copiado com sucesso! Envie para o próximo responsável.");
   };
 
   return (
@@ -157,7 +155,7 @@ const SolicitacaoCursos = () => {
         {fase === 1
           ? "Servidor"
           : fase === 2
-            ? "Superior Imediato"
+            ? "Chefe Imediato"
             : "Diretor Geral"}
       </h2>
 
@@ -167,25 +165,29 @@ const SolicitacaoCursos = () => {
         </p>
       )}
 
-      {/* Renderiza a Fase 1 (Servidor) */}
+      {/* Fase 1 */}
       <FormServidor
         formData={formData}
         onChange={handleInputChange}
         disabled={fase > 1}
         onGerarLink={handleGerarLink}
+        onCopiarLink={handleCopiarLink}
+        linkGerado={linkGerado}
       />
 
-      {/* Renderiza a Fase 2 (Chefe Imediato) */}
+      {/* Fase 2 */}
       {fase >= 2 && (
-        <FormSuperior
+        <FormSuperiorImediato
           formData={formData}
           onChange={handleInputChange}
           disabled={fase > 2}
           onGerarLink={handleGerarLink}
+          onCopiarLink={handleCopiarLink}
+          linkGerado={linkGerado}
         />
       )}
 
-      {/* Renderiza a Fase 3 (Diretor Geral) */}
+      {/* Fase 3 */}
       {fase === 3 && (
         <FormDiretorGeral
           formData={formData}
