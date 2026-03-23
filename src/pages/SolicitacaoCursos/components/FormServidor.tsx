@@ -241,17 +241,14 @@ const FormServidor: React.FC<FormServidorProps> = ({
             value={formData.cargaHorariaDiaria}
             onChange={onChange}
           />
+          <input
+            type="text"
+            name="formaApresentacao"
+            placeholder="Forma de Apresentação (presencial, online, etc.)"
+            value={formData.formaApresentacao}
+            onChange={onChange}
+          />
         </div>
-
-        <input
-          type="text"
-          name="formaApresentacao"
-          placeholder="Forma de Apresentação (presencial, online, etc.)"
-          value={formData.formaApresentacao}
-          onChange={onChange}
-          className="form-input-full"
-          style={{ marginTop: "1rem" }}
-        />
 
         <div className="radio-group" style={{ marginTop: "1rem" }}>
           <label>Uso para progressão na carreira?</label>
