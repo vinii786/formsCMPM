@@ -1,0 +1,204 @@
+// src/pages/SolicitacaoCursos/SolicitacaoCursos.tsx
+import React, { useState, useEffect } from "react";
+import "../FormularioFerias/FormularioFerias.css";
+import LZString from "lz-string";
+
+import FormServidor from "./components/FormServidor";
+import FormSuperiorImediato from "./components/FormSuperiorImediato";
+import FormDiretorGeral from "./components/FormDiretorGeral";
+
+export interface FormData {
+  nome: string;
+  endereco: string;
+  celular: string;
+  identidade: string;
+  matricula: string;
+  lotacao: string;
+  emailServidor: string;
+  cpf: string;
+  cargo: string;
+  ramal: string;
+  funcaoConfianca: "sim" | "nao";
+  tipoFuncao: "direcao" | "gratificada" | "nenhum";
+  qualFuncao: string;
+  descricaoCurso: string;
+  fornecedor: string;
+  cnpj: string;
+  contato: string;
+  whatsapp: string;
+  emailFornecedor: string;
+  periodoRealizacao: string;
+  inicioTermino: string;
+  cargaHorariaTotal: string;
+  cargaHorariaDiaria: string;
+  usoProgressao: "sim" | "nao";
+  formaApresentacao: string;
+  solicitaInscricao: "sim" | "nao";
+  valorInscricao: string;
+  solicitaMensalidade: "sim" | "nao";
+  valorMensalidade: string;
+  valorTotal: string;
+  parecerSuperior: string;
+  decisaoSuperior: "deferido" | "indeferido" | "";
+  dataSuperior: string;
+  parecerDiretor: string;
+  decisaoDiretor: "deferido" | "indeferido" | "";
+  dataDiretor: string;
+}
+
+const SolicitacaoCursos = () => {
+  const [formData, setFormData] = useState<FormData>({
+    nome: "",
+    endereco: "",
+    celular: "",
+    identidade: "",
+    matricula: "",
+    lotacao: "",
+    emailServidor: "",
+    cpf: "",
+    cargo: "",
+    ramal: "",
+    funcaoConfianca: "nao",
+    tipoFuncao: "nenhum",
+    qualFuncao: "",
+    descricaoCurso: "",
+    fornecedor: "",
+    cnpj: "",
+    contato: "",
+    whatsapp: "",
+    emailFornecedor: "",
+    periodoRealizacao: "",
+    inicioTermino: "",
+    cargaHorariaTotal: "",
+    cargaHorariaDiaria: "",
+    usoProgressao: "nao",
+    formaApresentacao: "",
+    solicitaInscricao: "nao",
+    valorInscricao: "",
+    solicitaMensalidade: "nao",
+    valorMensalidade: "",
+    valorTotal: "",
+    parecerSuperior: "",
+    decisaoSuperior: "",
+    dataSuperior: "",
+    parecerDiretor: "",
+    decisaoDiretor: "",
+    dataDiretor: "",
+  });
+  const [fase, setFase] = useState<1 | 2 | 3>(1);
+  const [pdfPronto, setPdfPronto] = useState(false);
+  const [linkGerado, setLinkGerado] = useState(false);
+  const [urlGerada, setUrlGerada] = useState("");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const dadosPdf = params.get("dados");
+
+    if (dadosPdf) {
+      try {
+        const jsonString = LZString.decompressFromEncodedURIComponent(dadosPdf);
+        const dadosRecuperados = JSON.parse(jsonString);
+
+        setFormData((prev) => ({ ...prev, ...dadosRecuperados }));
+
+        if (
+          dadosRecuperados.parecerSuperior &&
+          !dadosRecuperados.parecerDiretor
+        ) {
+          setFase(3);
+        } else if (dadosRecuperados.nome) {
+          setFase(2);
+        }
+      } catch (error) {
+        console.error("Erro ao ler dados da URL", error);
+        alert("Link inválido ou corrompido.");
+      }
+    }
+  }, []);
+
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setPdfPronto(false);
+    setLinkGerado(false);
+  };
+
+  const handleGerarLink = () => {
+    const dadosAtualizados = { ...formData };
+    const hoje = new Date().toLocaleDateString("pt-BR");
+
+    if (fase === 2) dadosAtualizados.dataSuperior = hoje;
+    if (fase === 3) dadosAtualizados.dataDiretor = hoje;
+
+    setFormData(dadosAtualizados);
+
+    const jsonString = JSON.stringify(dadosAtualizados);
+    const dadosPdf = LZString.compressToEncodedURIComponent(jsonString);
+    const url = `${window.location.origin}${window.location.pathname}?dados=${dadosPdf}`;
+
+    setUrlGerada(url);
+    setLinkGerado(true);
+  };
+
+  const handleCopiarLink = () => {
+    navigator.clipboard.writeText(urlGerada);
+    alert("Link copiado com sucesso! Envie para o próximo responsável.");
+  };
+
+  return (
+    <div className="form-container">
+      <h2>
+        Solicitação de Apoio a Cursos -{" "}
+        {fase === 1
+          ? "Servidor"
+          : fase === 2
+            ? "Chefe Imediato"
+            : "Diretor Geral"}
+      </h2>
+
+      {fase > 1 && (
+        <p style={{ color: "red" }}>
+          Atenção: Os dados das fases anteriores estão bloqueados para edição.
+        </p>
+      )}
+
+      {/* Fase 1 */}
+      <FormServidor
+        formData={formData}
+        onChange={handleInputChange}
+        disabled={fase > 1}
+        onGerarLink={handleGerarLink}
+        onCopiarLink={handleCopiarLink}
+        linkGerado={linkGerado}
+      />
+
+      {/* Fase 2 */}
+      {fase >= 2 && (
+        <FormSuperiorImediato
+          formData={formData}
+          onChange={handleInputChange}
+          disabled={fase > 2}
+          onGerarLink={handleGerarLink}
+          onCopiarLink={handleCopiarLink}
+          linkGerado={linkGerado}
+        />
+      )}
+
+      {/* Fase 3 */}
+      {fase === 3 && (
+        <FormDiretorGeral
+          formData={formData}
+          onChange={handleInputChange}
+          pdfPronto={pdfPronto}
+          setPdfPronto={setPdfPronto}
+        />
+      )}
+    </div>
+  );
+};
+
+export default SolicitacaoCursos;
