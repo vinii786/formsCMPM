@@ -114,7 +114,7 @@ const RelatorioViagemPdf = ({ formData }: { formData: FormData }) => {
     formatarParaNumero(formData.despesasRealizadas?.passagem?.reembolsar) +
     formatarParaNumero(formData.despesasRealizadas?.pedagio?.reembolsar) +
     formatarParaNumero(formData.despesasRealizadas?.estacionamento?.reembolsar);
-    
+
   // Função para formatar a data
   const formatDate = (dateString: string) => {
     if (!dateString || dateString.indexOf("-") === -1) {
